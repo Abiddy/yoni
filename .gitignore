@@ -1,0 +1,33 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Build
+dist/
+**/dist/
+build/
+*.local
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs / cache
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.vite/
+*.tsbuildinfo
+
+# Large local artifacts
+*.pdf
+mockup/
+**/.turbo/

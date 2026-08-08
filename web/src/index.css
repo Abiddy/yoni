@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+@theme {
+  --font-lato: "Lato", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  font-family: var(--font-lato);
+  background: #0b0b0b;
+  color: #f2f2f2;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+::selection {
+  background: rgba(242, 242, 242, 0.18);
+  color: #fff;
+}
+
+.hero-marquee {
+  overflow: hidden;
+  width: 100%;
+  mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+}
+
+.hero-marquee__track {
+  display: flex;
+  width: max-content;
+  gap: 3.5rem;
+  padding: 1.35rem 0;
+  animation: hero-marquee 32s linear infinite;
+}
+
+.hero-marquee__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  white-space: nowrap;
+  font-size: clamp(15px, 1.35vw, 18px);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #f2f2f2;
+}
+
+.hero-marquee__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: #d6c4a1;
+  flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+  .hero-marquee__track {
+    gap: 4rem;
+    padding: 1.65rem 0;
+  }
+}
+
+@keyframes hero-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-marquee__track {
+    animation: none;
+  }
+}
