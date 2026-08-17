@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-serif: var(--font-playfair);
+  --font-sans: var(--font-jakarta);
+  --color-forest: #163332;
+  --color-forest-deep: #102827;
+  --color-forest-mid: #1c3f3e;
+  --color-forest-soft: #234948;
+  --color-gold: #c9a86c;
+  --color-gold-bright: #e0c48a;
+  --color-cream: #f4efe6;
+  --color-mist: #d7e0df;
+  --color-slate-card: #eef2f5;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-forest);
+  color: white;
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--color-gold) 70%, white);
+  color: var(--color-forest-deep);
+}
+
+.grain {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  opacity: 0.045;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.underline-input {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid rgb(255 255 255 / 0.28);
+  border-radius: 0;
+  color: white;
+  width: 100%;
+  padding: 0.55rem 0 0.7rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.underline-input:focus {
+  border-bottom-color: var(--color-gold);
+}
+
+.underline-input::placeholder {
+  color: rgb(255 255 255 / 0.32);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.rise {
+  animation: rise 0.9s ease both;
+}
