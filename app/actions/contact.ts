@@ -81,13 +81,17 @@ export async function submitContact(
     createdAt: new Date().toISOString(),
   };
 
-  const dir = path.join(process.cwd(), "data");
-  await mkdir(dir, { recursive: true });
-  await appendFile(
-    path.join(dir, "leads.jsonl"),
-    `${JSON.stringify(lead)}\n`,
-    "utf8",
-  );
+  try {
+    const dir = path.join(process.cwd(), "data");
+    await mkdir(dir, { recursive: true });
+    await appendFile(
+      path.join(dir, "leads.jsonl"),
+      `${JSON.stringify(lead)}\n`,
+      "utf8",
+    );
+  } catch (error) {
+    console.error("Could not persist lead locally", error);
+  }
 
   return {
     ...empty,
