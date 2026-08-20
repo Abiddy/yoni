@@ -27,16 +27,16 @@ export function Navbar() {
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
         scrolled || open
-          ? "bg-forest-deep/90 shadow-[0_1px_0_rgb(255_255_255_/0.06)] backdrop-blur-md"
-          : "bg-transparent"
+          ? "bg-forest-deep shadow-[0_1px_0_rgb(255_255_255_/0.06)]"
+          : "bg-forest-deep"
       }`}
     >
-      <div className="mx-auto flex h-[72px] max-w-[1400px] items-center justify-between px-5 sm:px-8 lg:px-12">
+      <div className="mx-auto flex h-[84px] max-w-[1400px] items-center justify-between px-5 sm:px-8 lg:px-12">
         <a href="#top" className="text-white" onClick={() => setOpen(false)}>
           <Logo />
         </a>
 
-        <nav className="hidden items-center gap-9 lg:flex">
+        <nav className="hidden items-center gap-6 lg:flex xl:gap-9">
           {navLinks.map((link) => (
             <a
               key={link.href}

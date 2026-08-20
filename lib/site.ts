@@ -35,6 +35,8 @@ export const site = {
 export const navLinks = [
   { href: "#services", label: "Services" },
   { href: "#contact", label: "Contact" },
+  { href: "#reviews", label: "Reviews" },
+  { href: "#work", label: "Work" },
   { href: "#about", label: "About" },
   { href: "#team", label: "Team" },
 ] as const;
@@ -55,6 +57,57 @@ export const services = [
   {
     title: "Buying, Selling & Investing",
     body: "Buying your 1st or second home, selling or investing in real estate.",
+  },
+] as const;
+
+export const reviews = [
+  {
+    name: "Maria G.",
+    location: "Whittier, CA",
+    service: "Foreclosure",
+    rating: 5,
+    quote:
+      "I was weeks from losing the house and did not know who to trust. They explained every option, called me the same afternoon, and helped me walk out with a plan I could live with.",
+  },
+  {
+    name: "James T.",
+    location: "Commerce, CA",
+    service: "Probate",
+    rating: 5,
+    quote:
+      "After my father passed, the court process felt impossible. Value 4 Casa guided our family with patience and never made us feel rushed through something that was already heavy.",
+  },
+  {
+    name: "Elena R.",
+    location: "Pico Rivera, CA",
+    service: "Sell as-is",
+    rating: 5,
+    quote:
+      "The house needed more work than we could take on. They bought it as-is, no commissions, and the offer was fair. We closed without the usual circus of showings and repairs.",
+  },
+  {
+    name: "Daniel M.",
+    location: "Montebello, CA",
+    service: "Short sale",
+    rating: 5,
+    quote:
+      "Banks, paperwork, timelines — it was a lot. They stayed in our corner until it was done. I would send anyone in a hard spot to this team first.",
+  },
+  {
+    name: "Sofia L.",
+    location: "Downey, CA",
+    service: "Foreclosure",
+    rating: 5,
+    quote:
+      "They called in under an hour, just like they said. No pressure, no confusing pitch. Just a clear path and people who actually picked up the phone.",
+  },
+  {
+    name: "Robert H.",
+    location: "East Los Angeles, CA",
+    service: "Buying & investing",
+    rating: 5,
+    quote:
+      "We came for help selling and ended up trusting them with our next purchase too. Straightforward, experienced, and they treat you like family — because they are one.",
   },
 ] as const;
 

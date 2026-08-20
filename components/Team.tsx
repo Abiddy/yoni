@@ -9,7 +9,7 @@ export function Team() {
       <div className="relative mx-auto max-w-[1400px] px-5 py-20 sm:px-10 lg:px-14 lg:py-28">
         <div className="flex items-start justify-between text-[12px] tracking-[0.22em] text-white/50 uppercase">
           <span>{site.name}</span>
-          <span className="tabular-nums">04</span>
+          <span className="tabular-nums">05</span>
         </div>
 
         <Reveal>

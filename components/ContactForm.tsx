@@ -12,18 +12,12 @@ const initial: ContactState = {
 
 const fields = [
   {
-    name: "address",
-    label: "Address",
-    type: "text",
-    autoComplete: "street-address",
-    placeholder: "Street, city, and ZIP",
-  },
-  {
     name: "name",
     label: "Name",
     type: "text",
     autoComplete: "name",
     placeholder: "Your full name",
+    span: "sm:col-span-1",
   },
   {
     name: "phone",
@@ -31,6 +25,7 @@ const fields = [
     type: "tel",
     autoComplete: "tel",
     placeholder: "(555) 000-0000",
+    span: "sm:col-span-1",
   },
   {
     name: "email",
@@ -38,6 +33,15 @@ const fields = [
     type: "email",
     autoComplete: "email",
     placeholder: "you@example.com",
+    span: "sm:col-span-1",
+  },
+  {
+    name: "address",
+    label: "Property address",
+    type: "text",
+    autoComplete: "street-address",
+    placeholder: "Street, city, and ZIP",
+    span: "sm:col-span-1",
   },
 ] as const;
 
@@ -46,44 +50,44 @@ export function ContactForm() {
 
   if (state.ok) {
     return (
-      <div className="flex min-h-[420px] flex-col justify-center border border-gold/30 bg-white/3 px-8 py-12">
-        <p className="font-serif text-4xl text-gold">Thank you.</p>
-        <p className="mt-5 max-w-md text-[15px] leading-7 text-white/75">
-          {state.message}
-        </p>
+      <div className="flex min-h-[360px] flex-col justify-center">
+        <p className="font-serif text-3xl text-gold">Thank you.</p>
+        <p className="mt-4 text-[15px] leading-7 text-white/75">{state.message}</p>
       </div>
     );
   }
 
   return (
-    <form action={action} className="space-y-8" key={JSON.stringify(state.errors)}>
-      {fields.map((field) => {
-        const error = state.errors[field.name];
-        return (
-          <label key={field.name} className="block">
-            <span className="font-serif text-[28px] leading-none text-white sm:text-[32px]">
-              {field.label}
-            </span>
-            <input
-              name={field.name}
-              type={field.type}
-              autoComplete={field.autoComplete}
-              placeholder={field.placeholder}
-              defaultValue={state.values[field.name]}
-              className="underline-input mt-1"
-              aria-invalid={Boolean(error)}
-            />
-            {error ? (
-              <span className="mt-2 block text-xs tracking-wide text-gold-bright">
-                {error}
+    <form action={action} className="space-y-5" key={JSON.stringify(state.errors)}>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        {fields.map((field) => {
+          const error = state.errors[field.name];
+          return (
+            <label key={field.name} className={`block ${field.span}`}>
+              <span className="text-[11px] font-medium tracking-[0.18em] text-white/55 uppercase">
+                {field.label}
               </span>
-            ) : null}
-          </label>
-        );
-      })}
+              <input
+                name={field.name}
+                type={field.type}
+                autoComplete={field.autoComplete}
+                placeholder={field.placeholder}
+                defaultValue={state.values[field.name]}
+                className="underline-input mt-1"
+                aria-invalid={Boolean(error)}
+              />
+              {error ? (
+                <span className="mt-2 block text-xs tracking-wide text-gold-bright">
+                  {error}
+                </span>
+              ) : null}
+            </label>
+          );
+        })}
+      </div>
 
       <label className="block">
-        <span className="font-serif text-[28px] leading-none text-white sm:text-[32px]">
+        <span className="text-[11px] font-medium tracking-[0.18em] text-white/55 uppercase">
           How can we help
         </span>
         <textarea
@@ -98,7 +102,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={pending}
-        className="mt-2 inline-flex items-center justify-center border border-gold px-8 py-3.5 text-[12px] font-medium tracking-[0.22em] text-gold uppercase transition-colors hover:bg-gold hover:text-forest-deep disabled:cursor-wait disabled:opacity-60"
+        className="inline-flex w-full items-center justify-center bg-gold px-8 py-3.5 text-[12px] font-semibold tracking-[0.2em] text-forest-deep uppercase transition-colors hover:bg-gold-bright disabled:cursor-wait disabled:opacity-60"
       >
         {pending ? "Sending…" : "Request a call"}
       </button>

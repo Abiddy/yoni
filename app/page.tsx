@@ -1,8 +1,9 @@
 import { About } from "@/components/About";
-import { Contact } from "@/components/Contact";
+import { ClientImages } from "@/components/ClientImages";
 import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
 import { Navbar } from "@/components/Navbar";
+import { Reviews } from "@/components/Reviews";
 import { Team } from "@/components/Team";
 import { site } from "@/lib/site";
 
@@ -18,7 +19,8 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
-        <Contact />
+        <Reviews />
+        <ClientImages />
         <About />
         <Team />
       </main>
