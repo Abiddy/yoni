@@ -32,7 +32,7 @@ export function Navbar() {
       }`}
     >
       <div className="mx-auto flex h-[84px] max-w-[1400px] items-center justify-between px-5 sm:px-8 lg:px-12">
-        <a href="#top" className="text-white" onClick={() => setOpen(false)}>
+        <a href="/" className="text-white" onClick={() => setOpen(false)}>
           <Logo />
         </a>
 

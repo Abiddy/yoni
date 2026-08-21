@@ -18,7 +18,7 @@ export function About() {
             <Reveal className="relative aspect-[4/3] overflow-hidden bg-forest-deep shadow-2xl lg:order-last">
               <Image
                 src="/images/about-1.jpg"
-                alt="Professional real estate consultation"
+                alt="Value 4 Casa advisor meeting with a Southern California homeowner about foreclosure and probate options"
                 fill
                 className="object-cover opacity-80"
                 sizes="(min-width: 1024px) 45vw, 90vw"
@@ -41,7 +41,7 @@ export function About() {
             <Reveal className="relative aspect-[4/3] overflow-hidden bg-forest-deep shadow-2xl">
               <Image
                 src="/images/mission-1.jpg"
-                alt="Homeowners receiving support"
+                alt="Family meeting with Value 4 Casa to plan a foreclosure, probate, or as-is sale"
                 fill
                 className="object-cover opacity-80"
                 sizes="(min-width: 1024px) 45vw, 90vw"

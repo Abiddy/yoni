@@ -6,7 +6,9 @@ export function Footer() {
     <footer className="border-t border-white/10 bg-forest-deep">
       <div className="mx-auto grid max-w-[1400px] gap-10 px-5 py-14 sm:px-10 lg:grid-cols-[1.2fr_1fr_1fr] lg:px-14">
         <div>
-          <Logo size="footer" />
+          <a href="/" className="inline-block">
+            <Logo size="footer" />
+          </a>
           <p className="mt-5 max-w-sm font-serif text-2xl leading-snug text-white/90">
             Real estate, foreclosure & probate — with a team in your corner.
           </p>

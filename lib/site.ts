@@ -33,12 +33,12 @@ export const site = {
 } as const;
 
 export const navLinks = [
-  { href: "#services", label: "Services" },
-  { href: "#contact", label: "Contact" },
-  { href: "#reviews", label: "Reviews" },
-  { href: "#work", label: "Work" },
-  { href: "#about", label: "About" },
-  { href: "#team", label: "Team" },
+  { href: "/#services", label: "Services" },
+  { href: "/#contact", label: "Contact" },
+  { href: "/#reviews", label: "Reviews" },
+  { href: "/#work", label: "Work" },
+  { href: "/#about", label: "About" },
+  { href: "/#team", label: "Team" },
 ] as const;
 
 export const services = [
