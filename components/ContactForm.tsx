@@ -50,7 +50,7 @@ export function ContactForm() {
 
   if (state.ok) {
     return (
-      <div className="flex min-h-[360px] flex-col justify-center">
+      <div className="flex min-h-40 flex-col justify-center py-6 sm:min-h-[280px]">
         <p className="font-serif text-3xl text-gold">Thank you.</p>
         <p className="mt-4 text-[15px] leading-7 text-white/75">{state.message}</p>
       </div>
@@ -70,7 +70,9 @@ export function ContactForm() {
               <input
                 name={field.name}
                 type={field.type}
+                inputMode={field.name === "phone" ? "tel" : undefined}
                 autoComplete={field.autoComplete}
+                autoCapitalize={field.name === "name" ? "words" : undefined}
                 placeholder={field.placeholder}
                 defaultValue={state.values[field.name]}
                 className="underline-input mt-1"
@@ -102,7 +104,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={pending}
-        className="inline-flex w-full items-center justify-center bg-gold px-8 py-3.5 text-[12px] font-semibold tracking-[0.2em] text-forest-deep uppercase transition-colors hover:bg-gold-bright disabled:cursor-wait disabled:opacity-60"
+        className="inline-flex min-h-12 w-full items-center justify-center bg-gold px-8 py-3.5 text-[12px] font-semibold tracking-[0.2em] text-forest-deep uppercase transition-colors hover:bg-gold-bright disabled:cursor-wait disabled:opacity-60"
       >
         {pending ? "Sending…" : "Request a call"}
       </button>

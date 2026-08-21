@@ -71,26 +71,26 @@ export default async function WorkCasePage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       />
       <Navbar />
-      <main className="bg-forest pt-28">
-        <article className="mx-auto grid max-w-[1400px] gap-12 px-5 pb-20 sm:px-10 lg:grid-cols-[1.1fr_0.9fr] lg:px-14 lg:pb-28">
+      <main className="bg-forest pt-[calc(4.5rem+env(safe-area-inset-top))] sm:pt-24 lg:pt-28">
+        <article className="mx-auto grid max-w-[1400px] gap-10 px-4 pb-14 sm:gap-12 sm:px-10 sm:pb-20 lg:grid-cols-[1.1fr_0.9fr] lg:px-14 lg:pb-28">
           <div>
-            <p className="text-[12px] tracking-[0.22em] text-gold uppercase">
+            <p className="text-[12px] tracking-[0.18em] text-gold uppercase sm:tracking-[0.22em]">
               {item.location} · {item.title}
             </p>
-            <h1 className="mt-4 font-serif text-[clamp(2.2rem,4.5vw,3.8rem)] leading-[1.1] text-white">
+            <h1 className="mt-4 font-serif text-[clamp(1.85rem,7vw,3.8rem)] leading-[1.12] text-balance text-white">
               {item.headline}
             </h1>
-            <div className="relative mt-8 aspect-[4/3] overflow-hidden bg-forest-deep">
+            <div className="relative mt-6 aspect-[4/3] overflow-hidden bg-forest-deep sm:mt-8">
               <Image
                 src={item.image}
                 alt={item.description}
                 fill
                 className="object-cover"
-                sizes="(min-width: 1024px) 50vw, 90vw"
+                sizes="(min-width: 1024px) 50vw, 100vw"
                 priority
               />
             </div>
-            <div className="mt-8 space-y-5 text-[17px] leading-8 text-white/78">
+            <div className="mt-6 space-y-5 text-[16px] leading-7 text-pretty text-white/78 sm:mt-8 sm:text-[17px] sm:leading-8">
               {item.body.map((paragraph) => (
                 <p key={paragraph.slice(0, 24)}>{paragraph}</p>
               ))}
@@ -103,14 +103,14 @@ export default async function WorkCasePage({ params }: Props) {
             </p>
           </div>
 
-          <aside id="contact" className="h-fit border border-white/12 bg-forest-deep/70 px-6 py-7 sm:px-8 lg:sticky lg:top-28">
+          <aside id="contact" className="h-fit scroll-mt-24 border border-white/12 bg-forest-deep/70 px-4 py-6 sm:scroll-mt-28 sm:px-8 sm:py-7 lg:sticky lg:top-28">
             <p className="text-[11px] font-medium tracking-[0.22em] text-gold uppercase">
               Start here
             </p>
-            <h2 className="mt-3 font-serif text-3xl text-white">
+            <h2 className="mt-3 font-serif text-[1.75rem] text-balance text-white sm:text-3xl">
               Leave your information
             </h2>
-            <p className="mt-3 mb-7 text-[14px] leading-6 text-white/62">
+            <p className="mt-3 mb-6 text-[14px] leading-6 text-pretty text-white/62 sm:mb-7">
               Tell us about the {item.city} property. We will call you in less
               than 60 minutes.
             </p>
@@ -119,9 +119,9 @@ export default async function WorkCasePage({ params }: Props) {
         </article>
 
         <section className="border-t border-white/10 bg-forest-deep">
-          <div className="mx-auto max-w-[1400px] px-5 py-16 sm:px-10 lg:px-14">
-            <h2 className="font-serif text-3xl text-white">More local work</h2>
-            <div className="mt-8 grid gap-6 sm:grid-cols-3">
+          <div className="mx-auto max-w-[1400px] px-4 py-12 sm:px-10 sm:py-16 lg:px-14">
+            <h2 className="font-serif text-[1.75rem] text-white sm:text-3xl">More local work</h2>
+            <div className="mt-8 grid gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
               {related.map((entry) => (
                 <Link
                   key={entry.slug}
@@ -134,7 +134,7 @@ export default async function WorkCasePage({ params }: Props) {
                   <p className="mt-2 font-serif text-xl text-white group-hover:text-gold">
                     {entry.location}
                   </p>
-                  <p className="mt-2 text-[14px] text-white/55">
+                  <p className="mt-2 text-[14px] text-pretty text-white/55">
                     {entry.description}
                   </p>
                 </Link>
@@ -142,7 +142,7 @@ export default async function WorkCasePage({ params }: Props) {
             </div>
             <Link
               href="/#work"
-              className="mt-10 inline-block text-[13px] tracking-[0.14em] text-white/50 uppercase hover:text-gold"
+              className="mt-8 inline-flex min-h-11 items-center text-[13px] tracking-[0.14em] text-white/50 uppercase hover:text-gold sm:mt-10"
             >
               ← All recent work
             </Link>
@@ -150,12 +150,6 @@ export default async function WorkCasePage({ params }: Props) {
         </section>
       </main>
       <Footer />
-      <a
-        href={site.phoneHref}
-        className="fixed right-4 bottom-4 z-40 inline-flex items-center gap-2 rounded-full bg-gold px-5 py-3 text-[12px] font-semibold tracking-[0.14em] text-forest-deep uppercase shadow-lg lg:hidden"
-      >
-        Call now
-      </a>
     </>
   );
 }

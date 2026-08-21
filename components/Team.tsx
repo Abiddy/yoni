@@ -9,9 +9,12 @@ export function Team() {
   const featured = team[0];
 
   return (
-    <section id="team" className="cursor-house relative w-full overflow-hidden bg-forest-mid py-16 md:py-24">
+    <section
+      id="team"
+      className="cursor-house relative w-full scroll-mt-24 overflow-hidden bg-forest-mid py-14 sm:scroll-mt-28 sm:py-16 md:py-24"
+    >
       <svg
-        className="pointer-events-none absolute right-0 bottom-0 text-white/8"
+        className="pointer-events-none absolute right-0 bottom-0 hidden text-white/8 sm:block"
         fill="none"
         height="154"
         viewBox="0 0 460 154"
@@ -35,15 +38,15 @@ export function Team() {
       </svg>
 
       <div className="relative z-10 w-full">
-        <div className="mx-auto mb-14 flex max-w-5xl flex-col items-center px-6 text-center">
-          <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-gold text-forest-deep">
-            <UserStar className="h-6 w-6" />
+        <div className="mx-auto mb-8 flex max-w-5xl flex-col items-center px-4 text-center sm:mb-14 sm:px-6">
+          <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-gold text-forest-deep sm:mb-6 sm:h-12 sm:w-12">
+            <UserStar className="h-5 w-5 sm:h-6 sm:w-6" />
           </div>
 
-          <h2 className="relative mb-4 font-serif text-4xl tracking-tight text-white sm:text-5xl">
+          <h2 className="relative mb-3 font-serif text-[2rem] tracking-tight text-white sm:mb-4 sm:text-4xl md:text-5xl">
             Our team
             <svg
-              className="absolute -top-2 -right-8 -z-10 w-24 text-white/10"
+              className="absolute -top-2 -right-8 -z-10 hidden w-24 text-white/10 sm:block"
               fill="currentColor"
               height="86"
               viewBox="0 0 108 86"
@@ -59,32 +62,35 @@ export function Team() {
               />
             </svg>
           </h2>
-          <p className="max-w-2xl text-[16px] leading-7 text-white/65">
+          <p className="max-w-2xl text-[15px] leading-7 text-pretty text-white/65 sm:text-[16px]">
             Certified specialists in foreclosure, probate, and short sales —
             meeting you where you are, one family at a time.
+          </p>
+          <p className="mt-4 text-[12px] tracking-[0.16em] text-gold uppercase sm:hidden">
+            Swipe to meet everyone
           </p>
         </div>
 
         <SwipeRow>
           {team.map((member) => (
             <article
-              className="group flex w-[min(18rem,80vw)] shrink-0 snap-start flex-col"
+              className="group flex w-[min(17.5rem,calc(100vw-4.25rem))] shrink-0 snap-start flex-col sm:w-[min(18rem,80vw)]"
               key={member.name}
             >
-              <div className="relative h-80 w-full overflow-hidden rounded-2xl bg-forest-deep">
+              <div className="relative h-64 w-full overflow-hidden rounded-2xl bg-forest-deep sm:h-80">
                 <Image
                   alt={member.name}
                   className="pointer-events-none object-cover object-top grayscale transition-all duration-300 group-hover:grayscale-0"
                   draggable={false}
                   fill
                   src={member.image}
-                  sizes="288px"
+                  sizes="(min-width: 640px) 288px, 280px"
                 />
               </div>
               <div className="pt-4">
                 <h3 className="font-semibold text-white">{member.name}</h3>
-                <p className="mt-1 text-sm text-white/65">{member.title}</p>
-                <p className="mt-2 text-[13px] leading-5 text-white/55">
+                <p className="mt-1 text-sm text-pretty text-white/65">{member.title}</p>
+                <p className="mt-2 line-clamp-4 text-[13px] leading-5 text-white/55">
                   {member.bio}
                 </p>
                 <p className="mt-3 text-[12px] text-gold">{member.handle}</p>
@@ -93,8 +99,8 @@ export function Team() {
           ))}
         </SwipeRow>
 
-        <div className="mx-auto mt-20 max-w-3xl px-6 text-center lg:px-0">
-          <p className="mb-8 font-serif text-lg leading-relaxed text-white md:text-xl">
+        <div className="mx-auto mt-14 max-w-3xl px-4 text-center sm:mt-20 sm:px-6 lg:px-0">
+          <p className="mb-8 font-serif text-base leading-relaxed text-pretty text-white sm:text-lg md:text-xl">
             “I am passionate about helping you find the best option to resolve
             your current situation and attain your ideal outcome. I have helped
             many homeowners and would love for you to be next.”
@@ -111,7 +117,7 @@ export function Team() {
             </div>
             <div className="text-center">
               <p className="font-semibold text-white">{featured.name}</p>
-              <p className="text-sm text-white/55">
+              <p className="text-sm text-pretty text-white/55">
                 Certified probate, trust & foreclosure specialist
               </p>
             </div>

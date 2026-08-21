@@ -5,7 +5,6 @@ import { Hero } from "@/components/Hero";
 import { Navbar } from "@/components/Navbar";
 import { Reviews } from "@/components/Reviews";
 import { Team } from "@/components/Team";
-import { site } from "@/lib/site";
 
 export default function Home() {
   return (
@@ -25,12 +24,6 @@ export default function Home() {
         <Team />
       </main>
       <Footer />
-      <a
-        href={site.phoneHref}
-        className="fixed right-4 bottom-4 z-40 inline-flex items-center gap-2 rounded-full bg-gold px-5 py-3 text-[12px] font-semibold tracking-[0.14em] text-forest-deep uppercase shadow-lg lg:hidden"
-      >
-        Call now
-      </a>
     </>
   );
 }

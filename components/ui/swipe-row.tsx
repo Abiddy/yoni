@@ -15,6 +15,7 @@ export function SwipeRow({
   const [grabbing, setGrabbing] = useState(false);
 
   const onPointerDown = (event: PointerEvent<HTMLDivElement>) => {
+    if (event.pointerType !== "mouse") return;
     const el = ref.current;
     if (!el) return;
     drag.current = {
@@ -36,18 +37,19 @@ export function SwipeRow({
     if (!drag.current.active) return;
     drag.current.active = false;
     setGrabbing(false);
-    ref.current?.releasePointerCapture(event.pointerId);
+    if (ref.current?.hasPointerCapture(event.pointerId)) {
+      ref.current.releasePointerCapture(event.pointerId);
+    }
   };
 
   return (
     <div
       ref={ref}
       className={cn(
-        "flex w-full snap-x snap-mandatory gap-6 overflow-x-auto px-5 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+        "flex w-full snap-x snap-proximity gap-4 overflow-x-auto overscroll-x-contain px-4 pb-2 sm:gap-6 sm:px-8 sm:snap-mandatory lg:px-12 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
         grabbing ? "select-none" : "",
         className,
       )}
-      style={{ touchAction: "pan-x" }}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={endDrag}

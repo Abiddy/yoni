@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
 import { JsonLd } from "@/components/JsonLd";
 import { site } from "@/lib/site";
@@ -15,6 +15,13 @@ const jakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
   subsets: ["latin"],
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#163332",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

@@ -7,8 +7,6 @@ export function Logo({
   className?: string;
   size?: "nav" | "footer";
 }) {
-  const height = size === "footer" ? 56 : 44;
-
   return (
     <span className={`inline-flex items-center ${className}`}>
       <Image
@@ -17,8 +15,9 @@ export function Logo({
         width={220}
         height={110}
         priority={size === "nav"}
-        className="w-auto mix-blend-screen"
-        style={{ height }}
+        className={`w-auto mix-blend-screen ${
+          size === "footer" ? "h-11 sm:h-14" : "h-8 sm:h-10 lg:h-11"
+        }`}
       />
     </span>
   );

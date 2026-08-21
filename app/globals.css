@@ -19,12 +19,35 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+}
+
+@media (min-width: 1024px) {
+  html {
+    scroll-padding-top: 6.5rem;
+  }
 }
 
 body {
   background: var(--color-forest);
   color: white;
   font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-tap-highlight-color: rgb(212 175 55 / 0.18);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .rise {
+    animation: none;
+  }
+}
+
+a,
+button {
+  touch-action: manipulation;
 }
 
 ::selection {
@@ -49,7 +72,10 @@ body {
   border-radius: 0;
   color: white;
   width: 100%;
+  min-height: 2.75rem;
   padding: 0.55rem 0 0.7rem;
+  font-size: 1rem;
+  line-height: 1.5;
   outline: none;
   transition: border-color 0.2s ease;
 }
@@ -73,9 +99,11 @@ body {
   }
 }
 
-.cursor-house,
-.cursor-house * {
-  cursor: url("/cursors/house.svg") 16 6, pointer;
+@media (pointer: fine) {
+  .cursor-house,
+  .cursor-house * {
+    cursor: url("/cursors/house.svg") 16 6, pointer;
+  }
 }
 
 @keyframes marquee {

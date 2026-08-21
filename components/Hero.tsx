@@ -6,22 +6,22 @@ const serviceIcons = [Home, Landmark, Scale, TrendingUp] as const;
 
 export function Hero() {
   return (
-    <section id="top" className="relative flex min-h-screen flex-col bg-forest">
+    <section id="top" className="relative flex min-h-dvh flex-col bg-forest">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(47,134,255,0.08),transparent_34%),radial-gradient(ellipse_at_top_right,rgba(212,175,55,0.1),transparent_32%)]" />
 
-      <div className="relative flex flex-1 flex-col px-5 pt-28 sm:px-8 lg:px-12">
-        <div className="mx-auto grid w-full max-w-[1400px] flex-1 items-center gap-12 py-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.9fr)] lg:gap-16 lg:py-14">
+      <div className="relative flex flex-1 flex-col px-4 pt-[calc(4.5rem+env(safe-area-inset-top))] sm:px-8 sm:pt-24 lg:px-12 lg:pt-28">
+        <div className="mx-auto grid w-full max-w-[1400px] flex-1 items-center gap-8 py-8 sm:gap-12 sm:py-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.9fr)] lg:gap-16 lg:py-14">
           <div>
-            <p className="rise text-[12px] font-medium tracking-[0.28em] text-gold uppercase">
+            <p className="rise text-[11px] font-medium tracking-[0.2em] text-gold uppercase sm:text-[12px] sm:tracking-[0.28em]">
               Foreclosure · Probate · As-is sales
             </p>
 
-            <h1 className="rise mt-5 max-w-[14ch] font-serif text-[clamp(2.6rem,5.6vw,5.4rem)] leading-[1.02] font-normal text-white">
+            <h1 className="rise mt-4 max-w-[14ch] font-serif text-[clamp(2.15rem,9vw,5.4rem)] leading-[1.05] font-normal text-balance text-white sm:mt-5 sm:leading-[1.02]">
               The value you deserve for your casa.
             </h1>
 
             <p
-              className="rise mt-6 max-w-xl text-[17px] leading-8 text-white/74"
+              className="rise mt-5 max-w-xl text-[16px] leading-7 text-pretty text-white/74 sm:mt-6 sm:text-[17px] sm:leading-8"
               style={{ animationDelay: "90ms" }}
             >
               Family-owned specialists with 25+ years helping homeowners through
@@ -31,7 +31,7 @@ export function Hero() {
 
             <a
               href={site.phoneHref}
-              className="rise mt-8 inline-flex items-center gap-2 text-[15px] tracking-[0.04em] text-white/88 transition-colors hover:text-gold"
+              className="rise mt-6 inline-flex min-h-11 items-center gap-2 text-[15px] tracking-[0.04em] text-white/88 transition-colors hover:text-gold sm:mt-8"
               style={{ animationDelay: "140ms" }}
             >
               <Phone className="h-4 w-4 text-gold" />
@@ -39,7 +39,7 @@ export function Hero() {
             </a>
 
             <div
-              className="rise mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 text-[13px] text-white/65"
+              className="rise mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-[13px] text-white/65 sm:mt-8 sm:gap-x-5"
               style={{ animationDelay: "180ms" }}
             >
               <p className="inline-flex items-center gap-1.5 text-white">
@@ -50,7 +50,7 @@ export function Hero() {
                 </span>
                 <span className="font-medium">{site.google.rating}</span>
               </p>
-              <a href="#reviews" className="transition-colors hover:text-gold">
+              <a href="#reviews" className="py-1 transition-colors hover:text-gold">
                 {site.google.reviews} Google reviews
               </a>
               <span>25+ years</span>
@@ -60,16 +60,16 @@ export function Hero() {
 
           <div
             id="contact"
-            className="rise scroll-mt-28 border border-white/12 bg-forest-deep/70 px-6 py-7 sm:px-8 sm:py-8"
+            className="rise scroll-mt-24 border border-white/12 bg-forest-deep/70 px-4 py-6 sm:scroll-mt-28 sm:px-8 sm:py-8"
             style={{ animationDelay: "120ms" }}
           >
             <p className="text-[11px] font-medium tracking-[0.22em] text-gold uppercase">
               Start here
             </p>
-            <h2 className="mt-3 font-serif text-3xl text-white sm:text-[2rem]">
+            <h2 className="mt-3 font-serif text-[1.75rem] text-balance text-white sm:text-3xl sm:text-[2rem]">
               Leave your information
             </h2>
-            <p className="mt-3 mb-7 text-[14px] leading-6 text-white/62">
+            <p className="mt-3 mb-6 text-[14px] leading-6 text-pretty text-white/62 sm:mb-7">
               We will call you in less than 60 minutes and give you the value
               you deserve for your casa.
             </p>
@@ -78,7 +78,7 @@ export function Hero() {
         </div>
       </div>
 
-      <div id="services" className="relative border-t border-white/10">
+      <div id="services" className="relative scroll-mt-24 border-t border-white/10 sm:scroll-mt-28">
         <div className="mx-auto grid max-w-[1400px] grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
           {services.map((service, index) => {
             const Icon = serviceIcons[index];
@@ -86,10 +86,12 @@ export function Hero() {
               <a
                 key={service.title}
                 href="#contact"
-                className={`group px-6 py-8 transition-colors hover:bg-white/4 sm:px-8 lg:px-10 ${
-                  index > 0
-                    ? "border-t border-white/10 lg:border-t-0 lg:border-l"
-                    : ""
+                className={`group border-white/10 px-5 py-7 transition-colors hover:bg-white/4 sm:px-8 lg:px-10 lg:py-8 ${
+                  index > 0 ? "max-sm:border-t" : ""
+                } ${index % 2 === 1 ? "sm:border-l" : ""} ${
+                  index >= 2 ? "sm:border-t" : ""
+                } ${index > 0 ? "lg:border-l" : ""} ${
+                  index >= 2 ? "lg:border-t-0" : ""
                 }`}
               >
                 <div className="flex items-center justify-between">
