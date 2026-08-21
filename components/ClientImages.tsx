@@ -4,21 +4,57 @@ import { Reveal } from "@/components/Reveal";
 const properties = [
   {
     image: "/images/client-1.jpg",
-    title: "As-Is Purchase",
-    location: "Whittier, CA",
-    description: "Property purchased in current condition, helping the family avoid costly repairs and multiple showings.",
+    title: "Short sale",
+    location: "Covina, CA",
+    description:
+      "Short sale, and avoid foreclosure in Covina CA",
   },
   {
     image: "/images/client-2.jpg",
-    title: "Probate Sale",
-    location: "Commerce, CA",
-    description: "Successfully navigated the legal process to help heirs settle the estate with transparency and care.",
+    title: "Probate & foreclosure",
+    location: "Los Angeles, CA",
+    description:
+      "Probate & foreclosure stopped auction in Los Angeles, CA",
   },
   {
     image: "/images/client-3.jpg",
-    title: "Foreclosure Help",
+    title: "Foreclosure & eviction",
+    location: "Rancho Cucamonga, CA",
+    description:
+      "Avoid foreclosures and help with evicting squatters in Rancho Cucamonga, CA",
+  },
+  {
+    image: "/images/client-4.jpg",
+    title: "Lien negotiation",
+    location: "Norco, CA",
+    description:
+      "Avoid foreclosure and help negotiate lien on the house in Norco, CA",
+  },
+  {
+    image: "/images/client-5.jpg",
+    title: "Stop auction",
+    location: "Fontana, CA",
+    description:
+      "Stop auction and postpone to be able to sale the property in Fontana, CA",
+  },
+  {
+    image: "/images/client-6.jpg",
+    title: "Probate · cash as-is",
+    location: "Los Angeles, CA",
+    description: "Probate in Los Angeles, CA and bought cash as is",
+  },
+  {
+    image: "/images/client-7.jpg",
+    title: "Cash as-is offer",
     location: "Pico Rivera, CA",
-    description: "Fast closing to prevent foreclosure, providing the homeowner with a fresh start and real value.",
+    description:
+      "Stopped auction, avoided foreclosure and did a cash as is offer in Pico Rivera",
+  },
+  {
+    image: "/images/client-8.jpg",
+    title: "Probate & foreclosure",
+    location: "Rialto, CA",
+    description: "Probate and stop foreclosure in Rialto, CA",
   },
 ] as const;
 
@@ -34,19 +70,19 @@ export function ClientImages() {
         <div className="mt-10">
           <Reveal>
             <h2 className="font-serif text-[clamp(2.4rem,5vw,4.6rem)] leading-[1.05] text-white">
-              Properties we've helped transition.
+              Properties we&apos;ve helped transition.
             </h2>
           </Reveal>
         </div>
 
         <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {properties.map((prop, index) => (
-            <Reveal key={prop.location} delay={index * 100}>
+            <Reveal key={`${prop.location}-${index}`} delay={index * 80}>
               <article className="group overflow-hidden bg-forest-deep shadow-lg">
                 <div className="relative aspect-[4/3] overflow-hidden">
                   <Image
                     src={prop.image}
-                    alt={prop.title}
+                    alt={prop.description}
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                     sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 90vw"
