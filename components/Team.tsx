@@ -2,7 +2,7 @@
 
 import { UserStar } from "lucide-react";
 import Image from "next/image";
-import { Marquee } from "@/components/ui/marquee";
+import { SwipeRow } from "@/components/ui/swipe-row";
 import { team } from "@/lib/site";
 
 export function Team() {
@@ -65,16 +65,17 @@ export function Team() {
           </p>
         </div>
 
-        <Marquee className="w-full p-0 [--duration:70s] [--gap:1.5rem]" pauseOnHover>
+        <SwipeRow>
           {team.map((member) => (
             <article
-              className="group flex w-72 shrink-0 flex-col"
+              className="group flex w-[min(18rem,80vw)] shrink-0 snap-start flex-col"
               key={member.name}
             >
               <div className="relative h-80 w-full overflow-hidden rounded-2xl bg-forest-deep">
                 <Image
                   alt={member.name}
-                  className="object-cover object-top grayscale transition-all duration-300 group-hover:grayscale-0"
+                  className="pointer-events-none object-cover object-top grayscale transition-all duration-300 group-hover:grayscale-0"
+                  draggable={false}
                   fill
                   src={member.image}
                   sizes="288px"
@@ -90,7 +91,7 @@ export function Team() {
               </div>
             </article>
           ))}
-        </Marquee>
+        </SwipeRow>
 
         <div className="mx-auto mt-20 max-w-3xl px-6 text-center lg:px-0">
           <p className="mb-8 font-serif text-lg leading-relaxed text-white md:text-xl">
