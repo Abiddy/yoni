@@ -34,8 +34,8 @@ export function Team() {
         </defs>
       </svg>
 
-      <div className="relative z-10 mx-auto max-w-7xl">
-        <div className="mx-auto mb-14 flex max-w-5xl flex-col items-center px-6 text-center lg:px-0">
+      <div className="relative z-10 w-full">
+        <div className="mx-auto mb-14 flex max-w-5xl flex-col items-center px-6 text-center">
           <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-gold text-forest-deep">
             <UserStar className="h-6 w-6" />
           </div>
@@ -65,39 +65,32 @@ export function Team() {
           </p>
         </div>
 
-        <div className="relative w-full">
-          <div className="pointer-events-none absolute top-0 left-0 z-10 h-full w-24 bg-gradient-to-r from-forest-mid to-transparent sm:w-32" />
-          <div className="pointer-events-none absolute top-0 right-0 z-10 h-full w-24 bg-gradient-to-l from-forest-mid to-transparent sm:w-32" />
-
-          <Marquee className="[--duration:70s] [--gap:1.5rem]" pauseOnHover>
-            {team.map((member) => (
-              <article
-                className="group flex w-72 shrink-0 flex-col"
-                key={member.name}
-              >
-                <div className="relative h-[23rem] w-full overflow-hidden rounded-2xl bg-forest-deep">
-                  <Image
-                    alt={member.name}
-                    className="object-cover object-top grayscale transition-all duration-300 group-hover:grayscale-0"
-                    fill
-                    src={member.image}
-                    sizes="288px"
-                  />
-                  <div className="absolute inset-x-2 bottom-2 rounded-lg bg-forest-deep/90 p-3 backdrop-blur-sm">
-                    <h3 className="font-semibold text-white">{member.name}</h3>
-                    <p className="mt-0.5 line-clamp-2 text-sm text-white/65">
-                      {member.title}
-                    </p>
-                    <p className="mt-2 line-clamp-3 text-[12px] leading-4 text-white/50 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                      {member.bio}
-                    </p>
-                    <p className="mt-2 text-[12px] text-gold">{member.handle}</p>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </Marquee>
-        </div>
+        <Marquee className="w-full p-0 [--duration:70s] [--gap:1.5rem]" pauseOnHover>
+          {team.map((member) => (
+            <article
+              className="group flex w-72 shrink-0 flex-col"
+              key={member.name}
+            >
+              <div className="relative h-80 w-full overflow-hidden rounded-2xl bg-forest-deep">
+                <Image
+                  alt={member.name}
+                  className="object-cover object-top grayscale transition-all duration-300 group-hover:grayscale-0"
+                  fill
+                  src={member.image}
+                  sizes="288px"
+                />
+              </div>
+              <div className="pt-4">
+                <h3 className="font-semibold text-white">{member.name}</h3>
+                <p className="mt-1 text-sm text-white/65">{member.title}</p>
+                <p className="mt-2 text-[13px] leading-5 text-white/55">
+                  {member.bio}
+                </p>
+                <p className="mt-3 text-[12px] text-gold">{member.handle}</p>
+              </div>
+            </article>
+          ))}
+        </Marquee>
 
         <div className="mx-auto mt-20 max-w-3xl px-6 text-center lg:px-0">
           <p className="mb-8 font-serif text-lg leading-relaxed text-white md:text-xl">
