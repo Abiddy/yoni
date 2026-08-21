@@ -9,7 +9,7 @@ export function Team() {
   const featured = team[0];
 
   return (
-    <section id="team" className="relative w-full overflow-hidden bg-forest-mid py-16 md:py-24">
+    <section id="team" className="cursor-house relative w-full overflow-hidden bg-forest-mid py-16 md:py-24">
       <svg
         className="pointer-events-none absolute right-0 bottom-0 text-white/8"
         fill="none"

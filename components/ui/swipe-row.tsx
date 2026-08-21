@@ -44,7 +44,7 @@ export function SwipeRow({
       ref={ref}
       className={cn(
         "flex w-full snap-x snap-mandatory gap-6 overflow-x-auto px-5 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
-        grabbing ? "cursor-grabbing select-none" : "cursor-grab",
+        grabbing ? "select-none" : "",
         className,
       )}
       style={{ touchAction: "pan-x" }}

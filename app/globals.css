@@ -73,8 +73,9 @@ body {
   }
 }
 
-.rise {
-  animation: rise 0.9s ease both;
+.cursor-house,
+.cursor-house * {
+  cursor: url("/cursors/house.svg") 16 6, pointer;
 }
 
 @keyframes marquee {
