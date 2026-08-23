@@ -206,4 +206,11 @@ export const team = [
     handle: "@theluisjvargas",
     image: "/images/team-12.jpg",
   },
+  {
+    name: "Edgar Zepeda",
+    title: "Foreclosure specialist and real estate professional",
+    bio: "When I'm not saving homes or showing our clients homes, I'm spending time with my wife and kids.",
+    handle: "@EdgarZRealtor",
+    image: "/images/team-13.jpg",
+  },
 ] as const;
