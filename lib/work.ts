@@ -131,6 +131,23 @@ export const workCases = [
       "If this is your situation in Rialto, leave your details. A specialist will call you in less than 60 minutes.",
     ],
   },
+  {
+    slug: "carson-sell-as-is",
+    title: "Sell as-is",
+    location: "Carson, CA",
+    city: "Carson",
+    description:
+      "Property in Carson, CA — we helped the client recover their trust and sell as-is.",
+    image: "/images/client-9.jpg",
+    headline: "Helped a Carson homeowner sell as-is and recover their trust",
+    summary:
+      "Value 4 Casa helped a Carson, CA client sell their home as-is after rebuilding trust — no commissions and no repair list.",
+    body: [
+      "Some homeowners in Carson have already been burned by empty promises. Recovering trust comes before any offer: a clear explanation of options, no pressure, and a path that actually closes.",
+      "This Carson property sold as-is. We reviewed the home in its current condition, laid out a straightforward plan, and helped the client move forward without listings, showings, or a long repair list.",
+      "If you are in Carson and need to sell as-is, leave your information. A specialist will call you in under 60 minutes.",
+    ],
+  },
 ] as const;
 
 export type WorkCase = (typeof workCases)[number];
