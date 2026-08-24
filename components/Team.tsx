@@ -80,7 +80,7 @@ export function Team() {
               <div className="relative h-48 w-full overflow-hidden rounded-2xl bg-forest-deep sm:h-72 md:h-80">
                 <Image
                   alt={member.name}
-                  className="pointer-events-none object-cover object-[center_22%] grayscale transition-all duration-300 group-hover:grayscale-0"
+                  className="pointer-events-none object-cover object-[center_22%]"
                   draggable={false}
                   fill
                   src={member.image}
