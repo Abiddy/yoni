@@ -71,29 +71,35 @@ export function Team() {
           </p>
         </div>
 
-        <SwipeRow>
+        <SwipeRow autoPlay>
           {team.map((member) => (
             <article
-              className="group flex w-[min(17.5rem,calc(100vw-4.25rem))] shrink-0 snap-start flex-col sm:w-[min(18rem,80vw)]"
+              className="group flex w-[min(14.5rem,calc(100%-2.75rem))] shrink-0 snap-start flex-col sm:w-[min(18rem,80vw)]"
               key={member.name}
             >
-              <div className="relative h-64 w-full overflow-hidden rounded-2xl bg-forest-deep sm:h-80">
+              <div className="relative h-48 w-full overflow-hidden rounded-2xl bg-forest-deep sm:h-72 md:h-80">
                 <Image
                   alt={member.name}
-                  className="pointer-events-none object-cover object-top grayscale transition-all duration-300 group-hover:grayscale-0"
+                  className="pointer-events-none object-cover object-[center_22%] grayscale transition-all duration-300 group-hover:grayscale-0"
                   draggable={false}
                   fill
                   src={member.image}
-                  sizes="(min-width: 640px) 288px, 280px"
+                  sizes="(min-width: 640px) 288px, 232px"
                 />
               </div>
-              <div className="pt-4">
-                <h3 className="font-semibold text-white">{member.name}</h3>
-                <p className="mt-1 text-sm text-pretty text-white/65">{member.title}</p>
-                <p className="mt-2 line-clamp-4 text-[13px] leading-5 text-white/55">
+              <div className="pt-3 sm:pt-4">
+                <h3 className="text-[15px] font-semibold text-white sm:text-base">
+                  {member.name}
+                </h3>
+                <p className="mt-0.5 text-[12px] leading-4 text-pretty text-white/65 sm:mt-1 sm:text-sm sm:leading-5">
+                  {member.title}
+                </p>
+                <p className="mt-1.5 line-clamp-3 text-[11px] leading-4 text-white/55 sm:mt-2 sm:line-clamp-4 sm:text-[13px] sm:leading-5">
                   {member.bio}
                 </p>
-                <p className="mt-3 text-[12px] text-gold">{member.handle}</p>
+                <p className="mt-2 text-[11px] text-gold sm:mt-3 sm:text-[12px]">
+                  {member.handle}
+                </p>
               </div>
             </article>
           ))}
@@ -109,7 +115,7 @@ export function Team() {
             <div className="relative h-14 w-14 overflow-hidden rounded-full">
               <Image
                 alt={featured.name}
-                className="object-cover object-top"
+                className="object-cover object-[center_22%]"
                 fill
                 src={featured.image}
                 sizes="56px"
