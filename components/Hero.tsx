@@ -66,10 +66,10 @@ export function Hero() {
             <div className="relative aspect-[16/10] overflow-hidden border border-white/12 bg-forest-deep shadow-[0_24px_60px_rgb(0_0_0_/0.28)] lg:aspect-[3/4]">
               <Image
                 src="/images/house.jpg"
-                alt="A Southern California home Value 4 Casa helped a family move forward"
+                alt="Covina, CA short sale home — a casa Value 4 Casa helped keep out of foreclosure"
                 fill
                 priority
-                className="object-cover object-[center_60%]"
+                className="object-cover object-[center_38%]"
                 sizes="(min-width: 1024px) 28vw, 90vw"
               />
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-forest/55 via-transparent to-forest/25" />

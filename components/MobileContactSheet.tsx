@@ -7,10 +7,16 @@ import { site } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 const OPEN_MAX = 46 * 16;
+const PEEK = 272;
 const DRAG_THRESHOLD = 10;
 
-function openHeight() {
+function sheetHeight() {
+  if (typeof window === "undefined") return OPEN_MAX;
   return Math.min(window.innerHeight * 0.92, OPEN_MAX);
+}
+
+function closedOffset() {
+  return Math.max(sheetHeight() - PEEK, 0);
 }
 
 function isDragHandle(target: EventTarget | null) {
@@ -20,13 +26,14 @@ function isDragHandle(target: EventTarget | null) {
 export function MobileContactSheet() {
   const sheetRef = useRef<HTMLDivElement>(null);
   const [expanded, setExpanded] = useState(false);
-  const [dragHeight, setDragHeight] = useState<number | null>(null);
-  const dragHeightRef = useRef<number | null>(null);
+  const [dragging, setDragging] = useState(false);
+  const [dragY, setDragY] = useState<number | null>(null);
+  const dragYRef = useRef<number | null>(null);
   const frame = useRef<number | null>(null);
   const gesture = useRef({
     active: false,
     startY: 0,
-    startH: 0,
+    startOffset: 0,
     moved: false,
     lastY: 0,
     lastT: 0,
@@ -82,23 +89,25 @@ export function MobileContactSheet() {
     if (!sheet) return;
 
     const begin = (y: number) => {
+      const startOffset = dragYRef.current ?? (expanded ? 0 : closedOffset());
       gesture.current = {
         active: true,
         startY: y,
-        startH: expanded ? openHeight() : sheet.getBoundingClientRect().height,
+        startOffset,
         moved: false,
         lastY: y,
         lastT: performance.now(),
         velocity: 0,
       };
+      setDragging(true);
     };
 
-    const applyHeight = (next: number) => {
-      dragHeightRef.current = next;
+    const apply = (next: number) => {
+      dragYRef.current = next;
       if (frame.current != null) return;
       frame.current = window.requestAnimationFrame(() => {
         frame.current = null;
-        setDragHeight(dragHeightRef.current);
+        setDragY(dragYRef.current);
       });
     };
 
@@ -110,32 +119,25 @@ export function MobileContactSheet() {
       if (dt > 0) g.velocity = (y - g.lastY) / dt;
       g.lastY = y;
       g.lastT = now;
-
       const dy = y - g.startY;
       if (Math.abs(dy) > DRAG_THRESHOLD) g.moved = true;
-
-      const max = openHeight();
-      const min = expanded ? Math.round(max * 0.28) : Math.min(g.startH, max);
-      applyHeight(Math.min(max, Math.max(min, g.startH - dy)));
+      apply(Math.min(closedOffset(), Math.max(0, g.startOffset + dy)));
     };
 
     const finish = () => {
       const g = gesture.current;
       if (!g.active) return;
       g.active = false;
-      const current = dragHeightRef.current ?? g.startH;
-      const max = openHeight();
+      const current = dragYRef.current ?? g.startOffset;
+      const closed = closedOffset();
 
       if (g.moved) {
-        if (expanded) {
-          setExpanded(!(g.startH - current > 56 || g.velocity > 0.28));
-        } else {
-          setExpanded(current - g.startH > 40 || g.velocity < -0.22);
-        }
+        setExpanded(current < closed * 0.58 || g.velocity < -0.22);
       }
 
-      dragHeightRef.current = null;
-      setDragHeight(null);
+      dragYRef.current = null;
+      setDragY(null);
+      setDragging(false);
       window.setTimeout(() => {
         gesture.current.moved = false;
       }, 80);
@@ -191,16 +193,20 @@ export function MobileContactSheet() {
     };
   }, [expanded]);
 
+  const translateY = dragY ?? (expanded ? 0 : closedOffset());
+
   return (
     <div className="lg:hidden">
-      {expanded ? (
-        <button
-          type="button"
-          aria-label="Close form"
-          className="fixed inset-0 z-40 bg-forest-deep/45"
-          onClick={() => setExpanded(false)}
-        />
-      ) : null}
+      <button
+        type="button"
+        aria-label="Close form"
+        tabIndex={expanded ? 0 : -1}
+        className={cn(
+          "fixed inset-0 z-40 bg-forest-deep/50 transition-opacity duration-500",
+          expanded && !dragging ? "opacity-100" : "pointer-events-none opacity-0",
+        )}
+        onClick={() => setExpanded(false)}
+      />
 
       <div
         ref={sheetRef}
@@ -216,71 +222,58 @@ export function MobileContactSheet() {
           }
         }}
         className={cn(
-          "fixed inset-x-0 bottom-0 z-40 flex flex-col rounded-t-[1.75rem] bg-cream text-forest shadow-[0_-18px_50px_rgb(0_0_0_/0.28)]",
-          dragHeight == null && "transition-[height] duration-300 ease-out",
-          expanded && dragHeight == null ? "h-[min(92dvh,46rem)]" : "",
-          !expanded && dragHeight == null ? "h-auto" : "",
+          "fixed inset-x-0 bottom-0 z-40 flex h-[min(92dvh,46rem)] flex-col rounded-t-[1.75rem] bg-cream text-forest shadow-[0_-18px_50px_rgb(0_0_0_/0.28)] will-change-transform",
           !expanded && "[&_a]:[touch-action:none] [&_button]:[touch-action:none]",
         )}
-        style={dragHeight != null ? { height: dragHeight } : undefined}
+        style={{
+          transform: `translate3d(0, ${translateY}px, 0)`,
+          transition: dragging ? "none" : "transform 0.45s cubic-bezier(0.32, 0.72, 0, 1)",
+        }}
       >
         <div
           data-sheet-drag
-          className="flex shrink-0 flex-col items-center pt-3 pb-2"
+          className="flex shrink-0 flex-col items-center pt-5 pb-4"
         >
           <span className="h-1.5 w-12 rounded-full bg-forest/25" />
         </div>
 
-        {expanded ? (
-          <>
-            <div data-sheet-drag className="shrink-0 px-5 pb-3">
-              <p className="text-[11px] font-medium tracking-[0.22em] text-gold uppercase">
-                Start here
-              </p>
-              <h2
-                id="mobile-contact-title"
-                className="mt-2 font-serif text-[1.65rem] leading-tight text-forest"
-              >
-                Leave your information
-              </h2>
-              <p className="mt-2 text-[13px] leading-5 text-forest/60">
-                We will call you in less than 60 minutes.
-              </p>
-            </div>
-            <ContactForm tone="light" stickySubmit />
-          </>
-        ) : (
-          <div className="px-5 pt-1 pb-[max(0.85rem,env(safe-area-inset-bottom))]">
-            <p className="text-[11px] font-medium tracking-[0.22em] text-gold uppercase">
-              Start here
-            </p>
-            <h2
-              id="mobile-contact-title"
-              className="mt-1.5 font-serif text-[1.35rem] leading-tight text-forest"
+        <div data-sheet-drag className="shrink-0 px-5 pb-4">
+          <p className="text-[11px] font-medium tracking-[0.22em] text-gold uppercase">
+            Start here
+          </p>
+          <h2
+            id="mobile-contact-title"
+            className="mt-2.5 font-serif text-[1.65rem] leading-tight text-forest"
+          >
+            Leave your information
+          </h2>
+          <p className="mt-2 text-[13px] leading-5 text-forest/60">
+            We will call you in less than 60 minutes.
+          </p>
+        </div>
+
+        <div className="shrink-0 px-5 pb-[max(0.85rem,env(safe-area-inset-bottom))]">
+          <div className="grid grid-cols-2 gap-2.5">
+            <a
+              href={site.phoneHref}
+              className="inline-flex min-h-12 items-center justify-center border border-forest/15 px-3 text-[11px] font-semibold tracking-[0.14em] text-forest uppercase"
             >
-              Leave your information
-            </h2>
-            <p className="mt-1 text-[13px] text-forest/55">
-              Swipe up for the form — we’ll call in under 60 minutes.
-            </p>
-            <div className="mt-3 grid grid-cols-2 gap-2.5">
-              <a
-                href={site.phoneHref}
-                className="inline-flex min-h-12 items-center justify-center border border-forest/15 px-3 text-[11px] font-semibold tracking-[0.14em] text-forest uppercase"
-              >
-                <Phone className="mr-1.5 h-3.5 w-3.5" />
-                Call
-              </a>
-              <button
-                type="button"
-                className="inline-flex min-h-12 items-center justify-center bg-gold px-3 text-[11px] font-semibold tracking-[0.14em] text-forest-deep uppercase"
-                onClick={() => setExpanded(true)}
-              >
-                Request a call
-              </button>
-            </div>
+              <Phone className="mr-1.5 h-3.5 w-3.5" />
+              Call
+            </a>
+            <button
+              type="button"
+              className="inline-flex min-h-12 items-center justify-center bg-gold px-3 text-[11px] font-semibold tracking-[0.14em] text-forest-deep uppercase"
+              onClick={() => setExpanded((open) => !open)}
+            >
+              {expanded ? "Close" : "Request a call"}
+            </button>
           </div>
-        )}
+        </div>
+
+        <div className="flex min-h-0 flex-1 flex-col">
+          <ContactForm tone="light" stickySubmit />
+        </div>
       </div>
     </div>
   );

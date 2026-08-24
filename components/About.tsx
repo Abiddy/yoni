@@ -19,7 +19,7 @@ export function About() {
                 {about.heading}
               </h2>
               <div className="mt-4 h-px w-12 bg-gold" />
-              <p className="mt-6 font-serif text-[1.15rem] leading-8 text-pretty text-white/90 sm:mt-8 sm:text-[1.6rem] sm:leading-10">
+              <p className="mt-6 text-[14px] leading-6 text-pretty text-white/78 sm:mt-8 sm:text-[18px] sm:leading-8">
                 {about.body}
               </p>
             </Reveal>
@@ -41,7 +41,7 @@ export function About() {
                 {mission.heading}
               </h2>
               <div className="mt-4 h-px w-12 bg-gold" />
-              <p className="mt-6 text-[16px] leading-7 text-pretty text-white/78 sm:mt-8 sm:text-[18px] sm:leading-8">
+              <p className="mt-6 text-[14px] leading-6 text-pretty text-white/78 sm:mt-8 sm:text-[18px] sm:leading-8">
                 {mission.body}
               </p>
             </Reveal>
