@@ -103,7 +103,7 @@ export default async function WorkCasePage({ params }: Props) {
             </p>
           </div>
 
-          <aside id="contact" className="h-fit scroll-mt-24 border border-white/12 bg-forest-deep/70 px-4 py-6 sm:scroll-mt-28 sm:px-8 sm:py-7 lg:sticky lg:top-28">
+          <aside id="contact" className="hidden h-fit scroll-mt-24 border border-white/12 bg-forest-deep/70 px-4 py-6 sm:scroll-mt-28 sm:px-8 sm:py-7 lg:sticky lg:top-28 lg:block">
             <p className="text-[11px] font-medium tracking-[0.22em] text-gold uppercase">
               Start here
             </p>

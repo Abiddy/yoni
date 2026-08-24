@@ -3,7 +3,7 @@ import { navLinks, site } from "@/lib/site";
 
 export function Footer() {
   return (
-    <footer className="border-t border-white/10 bg-forest-deep pb-[calc(5.75rem+env(safe-area-inset-bottom))] lg:pb-0">
+    <footer className="border-t border-white/10 bg-forest-deep pb-[calc(11.5rem+env(safe-area-inset-bottom))] lg:pb-0">
       <div className="mx-auto grid max-w-[1400px] gap-10 px-4 py-12 sm:px-10 sm:py-14 lg:grid-cols-[1.2fr_1fr_1fr] lg:px-14">
         <div>
           <a href="/" className="inline-block">

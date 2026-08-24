@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 import { submitContact, type ContactState } from "@/app/actions/contact";
+import { cn } from "@/lib/utils";
 
 const initial: ContactState = {
   ok: false,
@@ -45,28 +46,53 @@ const fields = [
   },
 ] as const;
 
-export function ContactForm() {
+export function ContactForm({
+  tone = "dark",
+  stickySubmit = false,
+}: {
+  tone?: "dark" | "light";
+  stickySubmit?: boolean;
+}) {
   const [state, action, pending] = useActionState(submitContact, initial);
+  const light = tone === "light";
 
   if (state.ok) {
     return (
-      <div className="flex min-h-40 flex-col justify-center py-6 sm:min-h-[280px]">
+      <div
+        className={cn(
+          "flex flex-col justify-center py-6",
+          stickySubmit ? "min-h-40 px-5" : "min-h-40 sm:min-h-[280px]",
+        )}
+      >
         <p className="font-serif text-3xl text-gold">Thank you.</p>
-        <p className="mt-4 text-[15px] leading-7 text-white/75">{state.message}</p>
+        <p
+          className={cn(
+            "mt-4 text-[15px] leading-7",
+            light ? "text-forest/70" : "text-white/75",
+          )}
+        >
+          {state.message}
+        </p>
       </div>
     );
   }
 
-  return (
-    <form action={action} className="space-y-5" key={JSON.stringify(state.errors)}>
+  const labelClass = light
+    ? "text-[11px] font-medium tracking-[0.18em] text-forest/50 uppercase"
+    : "text-[11px] font-medium tracking-[0.18em] text-white/55 uppercase";
+  const inputClass = light ? "underline-input-light mt-1" : "underline-input mt-1";
+  const errorClass = light
+    ? "mt-2 block text-xs tracking-wide text-forest"
+    : "mt-2 block text-xs tracking-wide text-gold-bright";
+
+  const fieldsBlock = (
+    <>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {fields.map((field) => {
           const error = state.errors[field.name];
           return (
             <label key={field.name} className={`block ${field.span}`}>
-              <span className="text-[11px] font-medium tracking-[0.18em] text-white/55 uppercase">
-                {field.label}
-              </span>
+              <span className={labelClass}>{field.label}</span>
               <input
                 name={field.name}
                 type={field.type}
@@ -75,32 +101,30 @@ export function ContactForm() {
                 autoCapitalize={field.name === "name" ? "words" : undefined}
                 placeholder={field.placeholder}
                 defaultValue={state.values[field.name]}
-                className="underline-input mt-1"
+                className={inputClass}
                 aria-invalid={Boolean(error)}
               />
-              {error ? (
-                <span className="mt-2 block text-xs tracking-wide text-gold-bright">
-                  {error}
-                </span>
-              ) : null}
+              {error ? <span className={errorClass}>{error}</span> : null}
             </label>
           );
         })}
       </div>
 
       <label className="block">
-        <span className="text-[11px] font-medium tracking-[0.18em] text-white/55 uppercase">
-          How can we help
-        </span>
+        <span className={labelClass}>How can we help</span>
         <textarea
           name="note"
           rows={3}
           placeholder="Foreclosure, probate, selling as-is, or investing"
           defaultValue={state.values.note}
-          className="underline-input mt-1 resize-none"
+          className={`${inputClass} resize-none`}
         />
       </label>
+    </>
+  );
 
+  const submit = (
+    <>
       <button
         type="submit"
         disabled={pending}
@@ -108,10 +132,35 @@ export function ContactForm() {
       >
         {pending ? "Sending…" : "Request a call"}
       </button>
-
       {state.message && !state.ok ? (
-        <p className="text-sm text-gold-bright">{state.message}</p>
+        <p className={cn("text-sm", light ? "text-forest" : "text-gold-bright")}>
+          {state.message}
+        </p>
       ) : null}
+    </>
+  );
+
+  if (stickySubmit) {
+    return (
+      <form
+        action={action}
+        className="flex min-h-0 flex-1 flex-col"
+        key={JSON.stringify(state.errors)}
+      >
+        <div className="min-h-0 flex-1 space-y-5 overflow-y-auto px-5 pb-4">
+          {fieldsBlock}
+        </div>
+        <div className="shrink-0 space-y-3 border-t border-forest/10 bg-cream px-5 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+          {submit}
+        </div>
+      </form>
+    );
+  }
+
+  return (
+    <form action={action} className="space-y-5" key={JSON.stringify(state.errors)}>
+      {fieldsBlock}
+      {submit}
     </form>
   );
 }

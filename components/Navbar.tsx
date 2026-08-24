@@ -3,18 +3,15 @@
 import { useEffect, useState } from "react";
 import { Menu, Phone, X } from "lucide-react";
 import { Logo } from "@/components/Logo";
+import { MobileContactSheet } from "@/components/MobileContactSheet";
 import { navLinks, site } from "@/lib/site";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [showCallBar, setShowCallBar] = useState(false);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 16);
-      setShowCallBar(window.scrollY > 180);
-    };
+    const onScroll = () => setScrolled(window.scrollY > 16);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -123,15 +120,7 @@ export function Navbar() {
         </div>
       ) : null}
 
-      {!open && showCallBar ? (
-        <a
-          href={site.phoneHref}
-          className="fixed inset-x-4 bottom-[max(1rem,env(safe-area-inset-bottom))] z-40 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-gold px-5 text-[12px] font-semibold tracking-[0.14em] text-forest-deep uppercase shadow-[0_10px_30px_rgb(0_0_0_/0.28)] lg:hidden"
-        >
-          <Phone className="h-3.5 w-3.5" />
-          Call {site.phone}
-        </a>
-      ) : null}
+      {!open ? <MobileContactSheet /> : null}
     </>
   );
 }

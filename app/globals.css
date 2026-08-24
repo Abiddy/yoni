@@ -88,6 +88,29 @@ button {
   color: rgb(255 255 255 / 0.32);
 }
 
+.underline-input-light {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid rgb(22 51 50 / 0.22);
+  border-radius: 0;
+  color: var(--color-forest);
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.55rem 0 0.7rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.underline-input-light:focus {
+  border-bottom-color: var(--color-gold);
+}
+
+.underline-input-light::placeholder {
+  color: rgb(22 51 50 / 0.35);
+}
+
 @keyframes rise {
   from {
     opacity: 0;
