@@ -1,6 +1,5 @@
 import { Home, Landmark, Phone, Scale, Star, TrendingUp } from "lucide-react";
 import Image from "next/image";
-import { ContactForm } from "@/components/ContactForm";
 import { services, site } from "@/lib/site";
 
 const serviceIcons = [Home, Landmark, Scale, TrendingUp] as const;
@@ -11,7 +10,7 @@ export function Hero() {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(47,134,255,0.08),transparent_34%),radial-gradient(ellipse_at_top_right,rgba(212,175,55,0.1),transparent_32%)]" />
 
       <div className="relative flex flex-1 flex-col px-4 pt-[calc(4.5rem+env(safe-area-inset-top))] sm:px-8 sm:pt-24 lg:px-12 lg:pt-28">
-        <div className="mx-auto grid w-full max-w-[1400px] flex-1 items-center gap-8 py-8 sm:gap-10 sm:py-10 lg:grid-cols-[minmax(0,1fr)_minmax(200px,0.72fr)_minmax(280px,0.9fr)] lg:gap-8 lg:py-14 xl:gap-12">
+        <div className="mx-auto grid w-full max-w-[1400px] flex-1 items-center gap-8 py-8 sm:gap-10 sm:py-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.9fr)] lg:gap-12 lg:py-14 xl:gap-16">
           <div>
             <p className="rise text-[11px] font-medium tracking-[0.2em] text-gold uppercase sm:text-[12px] sm:tracking-[0.28em]">
               Foreclosure · Probate · As-is sales
@@ -57,41 +56,31 @@ export function Hero() {
               <span>25+ years</span>
               <span>Commerce, CA</span>
             </div>
+
+            <a
+              href="#contact"
+              className="rise mt-8 hidden min-h-12 items-center justify-center bg-gold px-7 text-[12px] font-semibold tracking-[0.18em] text-forest-deep uppercase transition-colors hover:bg-gold-bright lg:inline-flex"
+              style={{ animationDelay: "220ms" }}
+            >
+              Request a call
+            </a>
           </div>
 
           <div
-            className="rise relative mx-auto w-full max-w-md lg:mx-0 lg:max-w-none"
+            className="rise relative mx-auto w-full max-w-md lg:mx-0 lg:max-w-none lg:justify-self-end"
             style={{ animationDelay: "100ms" }}
           >
-            <div className="relative aspect-[16/10] overflow-hidden border border-white/12 bg-forest-deep shadow-[0_24px_60px_rgb(0_0_0_/0.28)] lg:aspect-[3/4]">
+            <div className="relative aspect-[16/10] overflow-hidden border border-white/12 bg-forest-deep shadow-[0_24px_60px_rgb(0_0_0_/0.28)] lg:aspect-[4/5] lg:max-h-[min(78vh,680px)]">
               <Image
                 src="/images/house.jpg"
                 alt="Covina, CA short sale home — a casa Value 4 Casa helped keep out of foreclosure"
                 fill
                 priority
                 className="object-cover object-[center_38%]"
-                sizes="(min-width: 1024px) 28vw, 90vw"
+                sizes="(min-width: 1024px) 42vw, 90vw"
               />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-forest/55 via-transparent to-forest/25" />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-forest/55 via-transparent to-forest/20" />
             </div>
-          </div>
-
-          <div
-            id="contact"
-            className="rise hidden scroll-mt-24 border border-white/12 bg-forest-deep/70 px-4 py-6 sm:scroll-mt-28 sm:px-8 sm:py-8 lg:block"
-            style={{ animationDelay: "120ms" }}
-          >
-            <p className="text-[11px] font-medium tracking-[0.22em] text-gold uppercase">
-              Start here
-            </p>
-            <h2 className="mt-3 font-serif text-[1.75rem] text-balance text-white sm:text-3xl sm:text-[2rem]">
-              Leave your information
-            </h2>
-            <p className="mt-3 mb-6 text-[14px] leading-6 text-pretty text-white/62 sm:mb-7">
-              We will call you in less than 60 minutes and give you the value
-              you deserve for your casa.
-            </p>
-            <ContactForm />
           </div>
         </div>
       </div>

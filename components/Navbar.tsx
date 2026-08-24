@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Menu, Phone, X } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { MobileContactSheet } from "@/components/MobileContactSheet";
+import { ContactModal } from "@/components/ContactModal";
 import { navLinks, site } from "@/lib/site";
 
 export function Navbar() {
@@ -121,6 +122,7 @@ export function Navbar() {
       ) : null}
 
       {!open ? <MobileContactSheet /> : null}
+      <ContactModal />
     </>
   );
 }
