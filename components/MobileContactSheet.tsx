@@ -108,7 +108,7 @@ export function MobileContactSheet() {
                 type="button"
                 aria-label="Request a call"
                 tabIndex={expanded ? -1 : 0}
-                className="inline-flex min-h-11 items-center justify-center bg-gold px-8 text-[12px] font-semibold tracking-[0.18em] text-forest-deep uppercase"
+                className="inline-flex min-h-11 items-center justify-center bg-transparent px-8 text-[12px] font-semibold tracking-[0.18em] text-forest-deep uppercase"
                 onClick={() => setExpanded(true)}
               >
                 Request a call
