@@ -72,11 +72,11 @@ export function Hero() {
           >
             <div className="relative aspect-[16/10] overflow-hidden border border-white/12 bg-forest-deep shadow-[0_24px_60px_rgb(0_0_0_/0.28)] lg:aspect-[4/5] lg:max-h-[min(78vh,680px)]">
               <Image
-                src="/images/house.jpg"
-                alt="Covina, CA short sale home — a casa Value 4 Casa helped keep out of foreclosure"
+                src="/images/about-1.jpg"
+                alt="Southern California home at dusk behind a gated driveway — the kind of casa Value 4 Casa helps families keep or sell"
                 fill
                 priority
-                className="object-cover object-[center_38%]"
+                className="object-cover object-center"
                 sizes="(min-width: 1024px) 42vw, 90vw"
               />
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-forest/55 via-transparent to-forest/20" />
