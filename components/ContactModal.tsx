@@ -72,14 +72,11 @@ export function ContactModal() {
 
   useEffect(() => {
     if (!open) return;
-    const original = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") close();
     };
     window.addEventListener("keydown", onKey);
     return () => {
-      document.body.style.overflow = original;
       window.removeEventListener("keydown", onKey);
     };
   }, [open]);
@@ -87,7 +84,12 @@ export function ContactModal() {
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-[60] hidden lg:block">
+    <div
+      className="fixed inset-0 z-[60] hidden lg:block"
+      onWheel={(event) => {
+        window.scrollBy({ top: event.deltaY, left: event.deltaX });
+      }}
+    >
       <button
         type="button"
         aria-label="Close form"
