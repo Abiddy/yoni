@@ -6,7 +6,7 @@ import { ContactForm } from "@/components/ContactForm";
 import { cn } from "@/lib/utils";
 
 const PEEK =
-  "3rem + max(0.75rem, env(safe-area-inset-bottom, 0px))";
+  "3.75rem + max(1rem, env(safe-area-inset-bottom, 0px))";
 
 export function MobileContactSheet() {
   const [expanded, setExpanded] = useState(false);
@@ -82,48 +82,48 @@ export function MobileContactSheet() {
         }}
       >
         <div className="flex h-full flex-col overflow-hidden rounded-t-[1.75rem]">
-          <div className="flex shrink-0 flex-col pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
-            <div className="grid h-9 grid-cols-[minmax(2.75rem,1fr)_auto_minmax(2.75rem,1fr)] items-center gap-2 px-3">
-              <div className="justify-self-start">
-                <button
-                  type="button"
-                  aria-label="Close form"
-                  tabIndex={expanded ? 0 : -1}
-                  className={cn(
-                    "inline-flex h-9 w-9 items-center justify-center text-forest/70 transition-opacity duration-500",
-                    expanded
-                      ? "opacity-100"
-                      : "pointer-events-none opacity-0",
-                  )}
-                  onClick={() => setExpanded(false)}
-                >
-                  <X className="h-5 w-5" strokeWidth={2} />
-                </button>
-              </div>
+          <div className="relative shrink-0 px-5 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
+            <div
+              className={cn(
+                "flex justify-center transition-opacity duration-500",
+                expanded && "pointer-events-none opacity-0",
+              )}
+            >
+              <button
+                type="button"
+                id={expanded ? undefined : "mobile-contact-title"}
+                aria-label="Request a call"
+                tabIndex={expanded ? -1 : 0}
+                className="inline-flex min-h-11 items-center justify-center bg-gold px-8 text-[12px] font-semibold tracking-[0.18em] text-forest-deep uppercase"
+                onClick={() => setExpanded(true)}
+              >
+                Request a call
+              </button>
+            </div>
 
+            <div
+              className={cn(
+                "absolute inset-x-0 top-4 flex h-11 items-center px-5 transition-opacity duration-500",
+                expanded
+                  ? "opacity-100"
+                  : "pointer-events-none opacity-0",
+              )}
+            >
+              <button
+                type="button"
+                aria-label="Close form"
+                tabIndex={expanded ? 0 : -1}
+                className="inline-flex h-11 w-11 shrink-0 items-center justify-center text-forest/70"
+                onClick={() => setExpanded(false)}
+              >
+                <X className="h-5 w-5" strokeWidth={2} />
+              </button>
               <h2
-                id="mobile-contact-title"
-                className="truncate text-center font-serif text-[1.05rem] leading-none text-forest"
+                id={expanded ? "mobile-contact-title" : undefined}
+                className="flex-1 pr-11 text-center font-serif text-[1.05rem] leading-none text-forest"
               >
                 Leave your information
               </h2>
-
-              <div className="justify-self-end">
-                <button
-                  type="button"
-                  aria-label="Open form"
-                  tabIndex={expanded ? -1 : 0}
-                  className={cn(
-                    "inline-flex h-9 items-center bg-gold px-3.5 text-[11px] font-semibold tracking-[0.14em] text-forest-deep uppercase transition-opacity duration-500",
-                    expanded
-                      ? "pointer-events-none opacity-0"
-                      : "opacity-100",
-                  )}
-                  onClick={() => setExpanded(true)}
-                >
-                  Open
-                </button>
-              </div>
             </div>
           </div>
 
