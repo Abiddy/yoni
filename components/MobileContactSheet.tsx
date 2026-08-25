@@ -71,7 +71,7 @@ export function MobileContactSheet() {
       <div
         id="mobile-contact"
         role={expanded ? "dialog" : "region"}
-        aria-labelledby="mobile-contact-title"
+        aria-label="Request a call"
         aria-modal={expanded}
         className="fixed inset-x-0 bottom-0 z-40 h-[min(92dvh,46rem)] rounded-t-[1.75rem] bg-cream text-forest shadow-[0_-18px_50px_rgb(0_0_0_/0.28)] will-change-transform"
         style={{
@@ -83,6 +83,21 @@ export function MobileContactSheet() {
       >
         <div className="flex h-full flex-col overflow-hidden rounded-t-[1.75rem]">
           <div className="relative shrink-0 px-5 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
+            <button
+              type="button"
+              aria-label="Close form"
+              tabIndex={expanded ? 0 : -1}
+              className={cn(
+                "absolute top-4 left-5 z-10 inline-flex h-11 w-11 items-center justify-center text-forest/70 transition-opacity duration-500",
+                expanded
+                  ? "opacity-100"
+                  : "pointer-events-none opacity-0",
+              )}
+              onClick={() => setExpanded(false)}
+            >
+              <X className="h-5 w-5" strokeWidth={2} />
+            </button>
+
             <div
               className={cn(
                 "flex justify-center transition-opacity duration-500",
@@ -91,7 +106,6 @@ export function MobileContactSheet() {
             >
               <button
                 type="button"
-                id={expanded ? undefined : "mobile-contact-title"}
                 aria-label="Request a call"
                 tabIndex={expanded ? -1 : 0}
                 className="inline-flex min-h-11 items-center justify-center bg-gold px-8 text-[12px] font-semibold tracking-[0.18em] text-forest-deep uppercase"
@@ -99,31 +113,6 @@ export function MobileContactSheet() {
               >
                 Request a call
               </button>
-            </div>
-
-            <div
-              className={cn(
-                "absolute inset-x-0 top-4 flex h-11 items-center px-5 transition-opacity duration-500",
-                expanded
-                  ? "opacity-100"
-                  : "pointer-events-none opacity-0",
-              )}
-            >
-              <button
-                type="button"
-                aria-label="Close form"
-                tabIndex={expanded ? 0 : -1}
-                className="inline-flex h-11 w-11 shrink-0 items-center justify-center text-forest/70"
-                onClick={() => setExpanded(false)}
-              >
-                <X className="h-5 w-5" strokeWidth={2} />
-              </button>
-              <h2
-                id={expanded ? "mobile-contact-title" : undefined}
-                className="flex-1 pr-11 text-center font-serif text-[1.05rem] leading-none text-forest"
-              >
-                Leave your information
-              </h2>
             </div>
           </div>
 
