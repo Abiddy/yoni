@@ -1,44 +1,15 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { Phone } from "lucide-react";
+import { useEffect, useState } from "react";
+import { X } from "lucide-react";
 import { ContactForm } from "@/components/ContactForm";
-import { site } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
-const OPEN_MAX = 46 * 16;
-const PEEK = 272;
-const DRAG_THRESHOLD = 10;
-
-function sheetHeight() {
-  if (typeof window === "undefined") return OPEN_MAX;
-  return Math.min(window.innerHeight * 0.92, OPEN_MAX);
-}
-
-function closedOffset() {
-  return Math.max(sheetHeight() - PEEK, 0);
-}
-
-function isDragHandle(target: EventTarget | null) {
-  return target instanceof Element && Boolean(target.closest("[data-sheet-drag]"));
-}
+const PEEK =
+  "3rem + max(0.75rem, env(safe-area-inset-bottom, 0px))";
 
 export function MobileContactSheet() {
-  const sheetRef = useRef<HTMLDivElement>(null);
   const [expanded, setExpanded] = useState(false);
-  const [dragging, setDragging] = useState(false);
-  const [dragY, setDragY] = useState<number | null>(null);
-  const dragYRef = useRef<number | null>(null);
-  const frame = useRef<number | null>(null);
-  const gesture = useRef({
-    active: false,
-    startY: 0,
-    startOffset: 0,
-    moved: false,
-    lastY: 0,
-    lastT: 0,
-    velocity: 0,
-  });
 
   useEffect(() => {
     const openFromHash = () => {
@@ -84,117 +55,6 @@ export function MobileContactSheet() {
     };
   }, [expanded]);
 
-  useEffect(() => {
-    const sheet = sheetRef.current;
-    if (!sheet) return;
-
-    const begin = (y: number) => {
-      const startOffset = dragYRef.current ?? (expanded ? 0 : closedOffset());
-      gesture.current = {
-        active: true,
-        startY: y,
-        startOffset,
-        moved: false,
-        lastY: y,
-        lastT: performance.now(),
-        velocity: 0,
-      };
-      setDragging(true);
-    };
-
-    const apply = (next: number) => {
-      dragYRef.current = next;
-      if (frame.current != null) return;
-      frame.current = window.requestAnimationFrame(() => {
-        frame.current = null;
-        setDragY(dragYRef.current);
-      });
-    };
-
-    const move = (y: number) => {
-      const g = gesture.current;
-      if (!g.active) return;
-      const now = performance.now();
-      const dt = now - g.lastT;
-      if (dt > 0) g.velocity = (y - g.lastY) / dt;
-      g.lastY = y;
-      g.lastT = now;
-      const dy = y - g.startY;
-      if (Math.abs(dy) > DRAG_THRESHOLD) g.moved = true;
-      apply(Math.min(closedOffset(), Math.max(0, g.startOffset + dy)));
-    };
-
-    const finish = () => {
-      const g = gesture.current;
-      if (!g.active) return;
-      g.active = false;
-      const current = dragYRef.current ?? g.startOffset;
-      const closed = closedOffset();
-
-      if (g.moved) {
-        setExpanded(current < closed * 0.58 || g.velocity < -0.22);
-      }
-
-      dragYRef.current = null;
-      setDragY(null);
-      setDragging(false);
-      window.setTimeout(() => {
-        gesture.current.moved = false;
-      }, 80);
-    };
-
-    const onTouchStart = (event: TouchEvent) => {
-      if (expanded && !isDragHandle(event.target)) return;
-      begin(event.touches[0].clientY);
-    };
-
-    const onTouchMove = (event: TouchEvent) => {
-      if (!gesture.current.active) return;
-      if (gesture.current.moved) event.preventDefault();
-      move(event.touches[0].clientY);
-    };
-
-    const onPointerDown = (event: PointerEvent) => {
-      if (event.pointerType === "touch") return;
-      if (expanded && !isDragHandle(event.target)) return;
-      begin(event.clientY);
-    };
-
-    const onPointerMove = (event: PointerEvent) => {
-      if (event.pointerType === "touch") return;
-      if (!gesture.current.active) return;
-      move(event.clientY);
-    };
-
-    const onPointerUp = (event: PointerEvent) => {
-      if (event.pointerType === "touch") return;
-      finish();
-    };
-
-    sheet.addEventListener("touchstart", onTouchStart, { passive: true });
-    window.addEventListener("touchmove", onTouchMove, { passive: false });
-    window.addEventListener("touchend", finish);
-    window.addEventListener("touchcancel", finish);
-    sheet.addEventListener("pointerdown", onPointerDown);
-    window.addEventListener("pointermove", onPointerMove);
-    window.addEventListener("pointerup", onPointerUp);
-    window.addEventListener("pointercancel", onPointerUp);
-
-    return () => {
-      sheet.removeEventListener("touchstart", onTouchStart);
-      window.removeEventListener("touchmove", onTouchMove);
-      window.removeEventListener("touchend", finish);
-      window.removeEventListener("touchcancel", finish);
-      sheet.removeEventListener("pointerdown", onPointerDown);
-      window.removeEventListener("pointermove", onPointerMove);
-      window.removeEventListener("pointerup", onPointerUp);
-      window.removeEventListener("pointercancel", onPointerUp);
-      if (frame.current != null) window.cancelAnimationFrame(frame.current);
-    };
-  }, [expanded]);
-
-  const translateY = dragY ?? (expanded ? 0 : closedOffset());
-
   return (
     <div className="lg:hidden">
       <button
@@ -203,76 +63,73 @@ export function MobileContactSheet() {
         tabIndex={expanded ? 0 : -1}
         className={cn(
           "fixed inset-0 z-40 bg-forest-deep/50 transition-opacity duration-500",
-          expanded && !dragging ? "opacity-100" : "pointer-events-none opacity-0",
+          expanded ? "opacity-100" : "pointer-events-none opacity-0",
         )}
         onClick={() => setExpanded(false)}
       />
 
       <div
-        ref={sheetRef}
         id="mobile-contact"
-        role="dialog"
+        role={expanded ? "dialog" : "region"}
         aria-labelledby="mobile-contact-title"
         aria-modal={expanded}
-        data-sheet-drag={expanded ? undefined : true}
-        onClickCapture={(event) => {
-          if (gesture.current.moved) {
-            event.preventDefault();
-            event.stopPropagation();
-          }
-        }}
-        className={cn(
-          "fixed inset-x-0 bottom-0 z-40 flex h-[min(92dvh,46rem)] flex-col rounded-t-[1.75rem] bg-cream text-forest shadow-[0_-18px_50px_rgb(0_0_0_/0.28)] will-change-transform",
-          !expanded && "[&_a]:[touch-action:none] [&_button]:[touch-action:none]",
-        )}
+        className="fixed inset-x-0 bottom-0 z-40 h-[min(92dvh,46rem)] rounded-t-[1.75rem] bg-cream text-forest shadow-[0_-18px_50px_rgb(0_0_0_/0.28)] will-change-transform"
         style={{
-          transform: `translate3d(0, ${translateY}px, 0)`,
-          transition: dragging ? "none" : "transform 0.45s cubic-bezier(0.32, 0.72, 0, 1)",
+          transform: expanded
+            ? "translate3d(0, 0, 0)"
+            : `translate3d(0, calc(100% - (${PEEK})), 0)`,
+          transition: "transform 0.5s cubic-bezier(0.32, 0.72, 0, 1)",
         }}
       >
-        <div
-          data-sheet-drag
-          className="flex shrink-0 flex-col items-center pt-5 pb-4"
-        >
-          <span className="h-1.5 w-12 rounded-full bg-forest/25" />
-        </div>
+        <div className="flex h-full flex-col overflow-hidden rounded-t-[1.75rem]">
+          <div className="flex shrink-0 flex-col pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+            <div className="grid h-9 grid-cols-[minmax(2.75rem,1fr)_auto_minmax(2.75rem,1fr)] items-center gap-2 px-3">
+              <div className="justify-self-start">
+                <button
+                  type="button"
+                  aria-label="Close form"
+                  tabIndex={expanded ? 0 : -1}
+                  className={cn(
+                    "inline-flex h-9 w-9 items-center justify-center text-forest/70 transition-opacity duration-500",
+                    expanded
+                      ? "opacity-100"
+                      : "pointer-events-none opacity-0",
+                  )}
+                  onClick={() => setExpanded(false)}
+                >
+                  <X className="h-5 w-5" strokeWidth={2} />
+                </button>
+              </div>
 
-        <div data-sheet-drag className="shrink-0 px-5 pb-4">
-          <p className="text-[11px] font-medium tracking-[0.22em] text-gold uppercase">
-            Start here
-          </p>
-          <h2
-            id="mobile-contact-title"
-            className="mt-2.5 font-serif text-[1.65rem] leading-tight text-forest"
-          >
-            Leave your information
-          </h2>
-          <p className="mt-2 text-[13px] leading-5 text-forest/60">
-            We will call you in less than 60 minutes.
-          </p>
-        </div>
+              <h2
+                id="mobile-contact-title"
+                className="truncate text-center font-serif text-[1.05rem] leading-none text-forest"
+              >
+                Leave your information
+              </h2>
 
-        <div className="shrink-0 px-5 pb-[max(0.85rem,env(safe-area-inset-bottom))]">
-          <div className="grid grid-cols-2 gap-2.5">
-            <a
-              href={site.phoneHref}
-              className="inline-flex min-h-12 items-center justify-center border border-forest/15 px-3 text-[11px] font-semibold tracking-[0.14em] text-forest uppercase"
-            >
-              <Phone className="mr-1.5 h-3.5 w-3.5" />
-              Call
-            </a>
-            <button
-              type="button"
-              className="inline-flex min-h-12 items-center justify-center bg-gold px-3 text-[11px] font-semibold tracking-[0.14em] text-forest-deep uppercase"
-              onClick={() => setExpanded((open) => !open)}
-            >
-              {expanded ? "Close" : "Request a call"}
-            </button>
+              <div className="justify-self-end">
+                <button
+                  type="button"
+                  aria-label="Open form"
+                  tabIndex={expanded ? -1 : 0}
+                  className={cn(
+                    "inline-flex h-9 items-center bg-gold px-3.5 text-[11px] font-semibold tracking-[0.14em] text-forest-deep uppercase transition-opacity duration-500",
+                    expanded
+                      ? "pointer-events-none opacity-0"
+                      : "opacity-100",
+                  )}
+                  onClick={() => setExpanded(true)}
+                >
+                  Open
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <div className="flex min-h-0 flex-1 flex-col">
-          <ContactForm tone="light" stickySubmit />
+          <div className="flex min-h-0 flex-1 flex-col" inert={!expanded}>
+            <ContactForm tone="light" stickySubmit />
+          </div>
         </div>
       </div>
     </div>
