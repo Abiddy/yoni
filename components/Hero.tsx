@@ -8,7 +8,7 @@ export function Hero() {
   return (
     <section id="top" className="relative bg-forest">
       <div className="bg-forest lg:grid lg:min-h-dvh lg:grid-cols-2 lg:bg-cream">
-        <div className="relative flex flex-col justify-center px-4 pt-[calc(4.5rem+env(safe-area-inset-top))] pb-10 text-white sm:px-8 sm:pt-24 sm:pb-12 lg:px-12 lg:pt-28 lg:pb-16 lg:text-forest xl:px-16">
+        <div className="relative flex flex-col justify-center px-4 pt-[calc(7.5rem+env(safe-area-inset-top))] pb-12 text-white sm:px-8 sm:pt-24 sm:pb-12 lg:px-12 lg:pt-28 lg:pb-16 lg:text-forest xl:px-16">
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(47,134,255,0.08),transparent_34%),radial-gradient(ellipse_at_top_right,rgba(212,175,55,0.1),transparent_32%)] lg:hidden" />
           <div className="relative mx-auto w-full max-w-lg lg:mx-0 lg:max-w-[34rem]">
             <p className="rise text-[11px] font-medium tracking-[0.22em] text-gold uppercase sm:text-[12px] sm:tracking-[0.28em]">

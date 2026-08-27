@@ -37,13 +37,13 @@ export function Navbar() {
   return (
     <>
       <header
-        className={`fixed inset-x-0 top-0 z-50 pt-[env(safe-area-inset-top)] transition-all duration-300 ${
+        className={`fixed inset-x-0 top-0 z-50 pt-[max(0.75rem,env(safe-area-inset-top))] transition-all duration-300 ${
           scrolled || open
             ? "bg-forest-deep shadow-[0_1px_0_rgb(255_255_255_/0.06)]"
             : "bg-forest-deep"
         }`}
       >
-        <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between gap-3 px-4 sm:h-[72px] sm:px-8 lg:h-[84px] lg:px-12">
+        <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between gap-3 px-4 pb-1 sm:h-[72px] sm:px-8 lg:h-[84px] lg:px-12">
           <a
             href="/"
             className="min-w-0 shrink text-white"
@@ -97,7 +97,7 @@ export function Navbar() {
       {open ? (
         <div
           id="mobile-menu"
-          className="fixed inset-x-0 top-[calc(4rem+env(safe-area-inset-top))] bottom-0 z-40 overflow-y-auto overscroll-contain border-t border-white/10 bg-forest-deep px-5 py-8 sm:top-[calc(4.5rem+env(safe-area-inset-top))] lg:hidden"
+          className="fixed inset-x-0 top-[calc(5rem+env(safe-area-inset-top))] bottom-0 z-40 overflow-y-auto overscroll-contain border-t border-white/10 bg-forest-deep px-5 py-8 sm:top-[calc(5.25rem+env(safe-area-inset-top))] lg:hidden"
         >
           <nav className="mx-auto flex max-w-lg flex-col">
             {navLinks.map((link) => (
