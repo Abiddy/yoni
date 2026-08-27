@@ -49,9 +49,11 @@ const fields = [
 export function ContactForm({
   tone = "dark",
   stickySubmit = false,
+  compact = false,
 }: {
   tone?: "dark" | "light";
   stickySubmit?: boolean;
+  compact?: boolean;
 }) {
   const [state, action, pending] = useActionState(submitContact, initial);
   const light = tone === "light";
@@ -87,7 +89,7 @@ export function ContactForm({
 
   const fieldsBlock = (
     <>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <div className={cn("grid grid-cols-1 sm:grid-cols-2", compact ? "gap-3" : "gap-4")}>
         {fields.map((field) => {
           const error = state.errors[field.name];
           return (
@@ -114,7 +116,7 @@ export function ContactForm({
         <span className={labelClass}>How can we help</span>
         <textarea
           name="note"
-          rows={3}
+          rows={compact ? 2 : 3}
           placeholder="Foreclosure, probate, selling as-is, or investing"
           defaultValue={state.values.note}
           className={`${inputClass} resize-none`}
@@ -158,7 +160,7 @@ export function ContactForm({
   }
 
   return (
-    <form action={action} className="space-y-5" key={JSON.stringify(state.errors)}>
+    <form action={action} className={compact ? "space-y-4" : "space-y-5"} key={JSON.stringify(state.errors)}>
       {fieldsBlock}
       {submit}
     </form>

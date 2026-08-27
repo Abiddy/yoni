@@ -2,6 +2,7 @@
 
 import { appendFile, mkdir } from "node:fs/promises";
 import path from "node:path";
+import { Resend } from "resend";
 
 export type ContactState = {
   ok: boolean;
@@ -40,6 +41,14 @@ function read(formData: FormData, key: string) {
   return String(formData.get(key) ?? "").trim();
 }
 
+function escapeHtml(value: string) {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;");
+}
+
 export async function submitContact(
   _prev: ContactState,
   formData: FormData,
@@ -72,6 +81,21 @@ export async function submitContact(
     };
   }
 
+  const apiKey = process.env.RESEND_API_KEY;
+  const to = process.env.CONTACT_TO_EMAIL ?? "riosyoni@gmail.com";
+  const from =
+    process.env.RESEND_FROM_EMAIL ?? "Value 4 Casa <beth.t@example.com>";
+
+  if (!apiKey) {
+    console.error("RESEND_API_KEY is not set");
+    return {
+      ok: false,
+      message: "The form is not connected yet. Please call us instead.",
+      errors: {},
+      values,
+    };
+  }
+
   const lead = {
     name,
     address,
@@ -81,6 +105,39 @@ export async function submitContact(
     createdAt: new Date().toISOString(),
   };
 
+  const resend = new Resend(apiKey);
+  const { error } = await resend.emails.send({
+    from,
+    to,
+    replyTo: email,
+    subject: `New lead from ${name}`,
+    text: [
+      `Name: ${name}`,
+      `Phone: ${phone}`,
+      `Email: ${email}`,
+      `Address: ${address}`,
+      `Note: ${note || "(none)"}`,
+    ].join("\n"),
+    html: `
+      <h2>New Value 4 Casa lead</h2>
+      <p><strong>Name:</strong> ${escapeHtml(name)}</p>
+      <p><strong>Phone:</strong> ${escapeHtml(phone)}</p>
+      <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+      <p><strong>Address:</strong> ${escapeHtml(address)}</p>
+      <p><strong>How can we help:</strong><br/>${escapeHtml(note || "(none)").replaceAll("\n", "<br/>")}</p>
+    `,
+  });
+
+  if (error) {
+    console.error("Resend failed", error);
+    return {
+      ok: false,
+      message: "Something went wrong sending this. Please call us instead.",
+      errors: {},
+      values,
+    };
+  }
+
   try {
     const dir = path.join(process.cwd(), "data");
     await mkdir(dir, { recursive: true });
@@ -89,8 +146,8 @@ export async function submitContact(
       `${JSON.stringify(lead)}\n`,
       "utf8",
     );
-  } catch (error) {
-    console.error("Could not persist lead locally", error);
+  } catch (persistError) {
+    console.error("Could not persist lead locally", persistError);
   }
 
   return {

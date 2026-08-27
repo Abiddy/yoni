@@ -6,7 +6,6 @@ import { ContactForm } from "@/components/ContactForm";
 import { cn } from "@/lib/utils";
 
 const STORAGE_KEY = "v4c-contact-modal-dismissed";
-const AUTO_OPEN_MS = 4000;
 
 export function ContactModal() {
   const [open, setOpen] = useState(false);
@@ -23,51 +22,13 @@ export function ContactModal() {
   useEffect(() => {
     const isDesktop = () => window.innerWidth >= 1024;
 
-    const openModal = () => {
+    const onCustom = () => {
       if (!isDesktop()) return;
       setOpen(true);
     };
 
-    const onClick = (event: MouseEvent) => {
-      const target = event.target as HTMLElement | null;
-      const link = target?.closest("a");
-      if (!link) return;
-      const href = link.getAttribute("href");
-      if (
-        (href === "#contact" || href === "/#contact") &&
-        isDesktop()
-      ) {
-        event.preventDefault();
-        openModal();
-      }
-    };
-
-    const onHash = () => {
-      if (window.location.hash === "#contact") openModal();
-    };
-
-    const onCustom = () => openModal();
-
-    document.addEventListener("click", onClick);
-    window.addEventListener("hashchange", onHash);
     window.addEventListener("open-contact", onCustom);
-    onHash();
-
-    let timer = 0;
-    try {
-      if (!sessionStorage.getItem(STORAGE_KEY) && isDesktop()) {
-        timer = window.setTimeout(openModal, AUTO_OPEN_MS);
-      }
-    } catch {
-      timer = window.setTimeout(openModal, AUTO_OPEN_MS);
-    }
-
-    return () => {
-      document.removeEventListener("click", onClick);
-      window.removeEventListener("hashchange", onHash);
-      window.removeEventListener("open-contact", onCustom);
-      window.clearTimeout(timer);
-    };
+    return () => window.removeEventListener("open-contact", onCustom);
   }, []);
 
   useEffect(() => {
