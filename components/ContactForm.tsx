@@ -80,9 +80,11 @@ export function ContactForm({
   }
 
   const labelClass = light
-    ? "text-[11px] font-medium tracking-[0.18em] text-forest/50 uppercase"
+    ? "text-[11px] font-semibold tracking-[0.16em] text-forest/70 uppercase lg:text-[12px] lg:text-forest/80"
     : "text-[11px] font-medium tracking-[0.18em] text-white/55 uppercase";
-  const inputClass = light ? "underline-input-light mt-1" : "underline-input mt-1";
+  const inputClass = light
+    ? "underline-input-light mt-1 font-medium lg:font-semibold lg:text-[17px]"
+    : "underline-input mt-1";
   const errorClass = light
     ? "mt-2 block text-xs tracking-wide text-forest"
     : "mt-2 block text-xs tracking-wide text-gold-bright";
