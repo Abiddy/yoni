@@ -80,10 +80,10 @@ export function ContactForm({
   }
 
   const labelClass = light
-    ? "text-[11px] font-semibold tracking-[0.16em] text-forest/70 uppercase lg:text-[12px] lg:text-forest/80"
+    ? "text-[11px] font-bold tracking-[0.16em] text-forest/80 uppercase lg:text-[13px] lg:text-forest"
     : "text-[11px] font-medium tracking-[0.18em] text-white/55 uppercase";
   const inputClass = light
-    ? "underline-input-light mt-1 font-medium lg:font-semibold lg:text-[17px]"
+    ? "underline-input-light mt-1 font-semibold lg:font-bold lg:text-[18px]"
     : "underline-input mt-1";
   const errorClass = light
     ? "mt-2 block text-xs tracking-wide text-forest"
@@ -132,7 +132,7 @@ export function ContactForm({
       <button
         type="submit"
         disabled={pending}
-        className="inline-flex min-h-12 w-full items-center justify-center bg-gold px-8 py-3.5 text-[12px] font-semibold tracking-[0.2em] text-forest-deep uppercase transition-colors hover:bg-gold-bright disabled:cursor-wait disabled:opacity-60"
+        className="inline-flex min-h-12 w-full items-center justify-center bg-gold px-8 py-3.5 text-[12px] font-bold tracking-[0.2em] text-forest-deep uppercase transition-colors hover:bg-gold-bright disabled:cursor-wait disabled:opacity-60"
       >
         {pending ? "Sending…" : "Request a call"}
       </button>

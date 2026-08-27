@@ -61,10 +61,10 @@ export function Hero() {
           className="hidden flex-col justify-center border-forest/10 px-8 py-16 lg:flex lg:border-l lg:px-12 lg:pt-28 lg:pb-16 xl:px-16"
         >
           <div className="mx-auto w-full max-w-md">
-            <p className="text-[11px] font-semibold tracking-[0.22em] text-gold uppercase">
+            <p className="text-[11px] font-bold tracking-[0.22em] text-gold uppercase">
               Request a call
             </p>
-            <p className="mt-2 mb-8 text-[15px] leading-6 font-medium text-forest/70">
+            <p className="mt-2 mb-8 text-[15px] leading-6 font-semibold text-forest/80">
               We call back in under 60 minutes.
             </p>
             <ContactForm tone="light" />
